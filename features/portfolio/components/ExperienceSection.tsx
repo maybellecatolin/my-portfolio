@@ -1,0 +1,6 @@
+import { SectionKicker } from "@/components/common/SectionKicker";
+import { experience, projectArchive } from "@/features/portfolio/data";
+
+export function ExperienceSection() {
+  return <section className="experience-section section-wrap" id="experience" aria-labelledby="experience-heading"><div className="section-heading compact-heading"><SectionKicker>02 / The throughline</SectionKicker><h2 id="experience-heading">A practice built<br /><em>on good questions.</em></h2></div><div className="experience-content"><p className="pull-quote">“Translate complex business requirements into scalable technical solutions.”</p><div className="timeline">{experience.map((item) => <div className={`timeline-item ${item.current ? "current" : ""}`} key={item.company}><div className="timeline-date">{item.date}</div><div><h3>{item.company}</h3><p>{item.role}</p><span>{item.details}</span><small>{item.scope}</small></div></div>)}</div><div className="project-archive"><div className="archive-heading"><span>Project index</span><strong>11 projects · 3 companies</strong></div>{projectArchive.map((group) => <div className="archive-group" key={group.company}><h3>{group.company}</h3><ul>{group.projects.map((project) => <li key={project}>{project}</li>)}</ul></div>)}</div></div></section>;
+}
