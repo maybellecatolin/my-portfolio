@@ -5,6 +5,9 @@
  *            (2×2 on tablet, a single row of 4 from 900px)
  * Horizontal edges come from the shared --gutter / --frame tokens in globals.css,
  * so the hero always lines up with the site header.
+ *
+ * Vertical rhythm (4px scale): gaps inside a group are smaller than gaps between
+ * groups — meta (pill + role) · illustration · content (heading, intro, actions).
  */
 
 .hero {
@@ -22,10 +25,8 @@
     "content";
   grid-template-columns: minmax(0, 1fr);
   min-height: calc(100svh - var(--header-h));
-  row-gap: 12px;
-  /* The illustration is scaled up slightly on phones (HeroIllustration.module.css). */
-  overflow-x: clip;
-  padding: 24px var(--gutter) 20px;
+  padding: 24px var(--gutter);
+  row-gap: 32px;
 }
 
 /* ——— Meta: availability + role ——— */
@@ -34,7 +35,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   grid-area: meta;
 }
 
@@ -62,7 +63,7 @@
 }
 
 .role {
-  color: var(--coral);
+  color: var(--coral-strong);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -92,8 +93,9 @@
 
 .heading {
   font-size: clamp(42px, 10.5vw, 64px);
+  letter-spacing: -0.04em;
   line-height: 0.92;
-  margin: 0 0 24px;
+  margin: 0 0 20px;
 }
 
 /* Each phrase is its own line at every size; no <br> or nowrap hacks needed. */
@@ -113,7 +115,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px 28px;
-  margin-top: 32px;
+  margin-top: 28px;
 }
 
 .button {
@@ -177,13 +179,13 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 20px 16px 20px 20px;
+  /* Left padding = page gutter: first-column text aligns with the copy above, and
+     every value sits the same distance from its divider. */
+  padding: 20px 12px 20px var(--gutter);
 }
 
-/* First column shares the page gutter so stat text lines up with the copy above. */
 .stat:nth-child(odd) {
   border-right: 1px solid var(--line);
-  padding-left: var(--gutter);
 }
 
 .stat:nth-child(-n + 2) {
@@ -192,10 +194,11 @@
 
 .statValue {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(26px, 6.5vw, 36px);
+  font-size: clamp(24px, 6.4vw, 36px);
   font-weight: 400;
   letter-spacing: -0.04em;
   line-height: 1;
+  text-wrap: balance;
 }
 
 .statLabel {
@@ -203,8 +206,9 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   line-height: 1.4;
-  max-width: 26ch;
+  max-width: 30ch;
   text-transform: uppercase;
+  text-wrap: balance;
 }
 
 /* ——— Very small phones: keep both actions on one line ——— */
@@ -233,14 +237,24 @@
     grid-template-areas:
       "meta art"
       "content art";
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
     min-height: 0;
-    padding-block: clamp(28px, 6vh, 72px);
+    /* Minimum only: the copy and art are centred, so spare height splits evenly. */
+    padding-block: 24px;
     row-gap: 0;
   }
 
   .meta {
+    gap: 16px;
     margin-bottom: 16px;
+  }
+
+  .heading {
+    margin-bottom: 24px;
+  }
+
+  .actions {
+    margin-top: 32px;
   }
 
   .art {
@@ -258,7 +272,9 @@
 
 @media (min-width: 900px) {
   .heading {
-    font-size: clamp(56px, 5.6vw, 88px);
+    /* Scales with height as well as width so 1280×720 / 1366×768 keep the stats in view.
+       Capped at 80px: past 1440px the column stops growing, and "deserves great" must fit. */
+    font-size: clamp(56px, min(5.6vw, 9vh), 80px);
   }
 
   .intro {
@@ -274,11 +290,7 @@
   .stat:nth-child(-n + 2) {
     border-bottom: 0;
     border-right: 1px solid var(--line);
-    padding: 24px 16px 24px clamp(16px, 2.5vw, 40px);
-  }
-
-  .stat:first-child {
-    padding-left: var(--gutter);
+    padding: clamp(16px, 2.5vh, 24px) 16px clamp(16px, 2.5vh, 24px) var(--gutter);
   }
 
   .stat:last-child {

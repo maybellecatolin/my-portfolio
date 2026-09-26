@@ -4,6 +4,8 @@
   --paper: #f2efe8;
   --paper-deep: #e5e0d5;
   --coral: #ee684b;
+  /* Darker coral for small text: 4.7:1 on --paper (WCAG AA). */
+  --coral-strong: #b8431f;
   --sage: #a9b8a4;
   --line: rgba(31, 39, 35, 0.18);
   /* Layout tokens shared by the header and hero so their edges line up. */
