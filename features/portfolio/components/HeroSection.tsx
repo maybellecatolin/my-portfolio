@@ -1,3 +1,66 @@
+import { heroStats } from "@/features/portfolio/data";
+
+import { HeroIllustration } from "./HeroIllustration";
+import styles from "./HeroSection.module.css";
+
 export function HeroSection() {
-  return <section className="hero-section" aria-labelledby="hero-heading"><div className="hero-copy"><p className="eyebrow"><span className="status-dot" /> Available for thoughtful builds</p><p className="hero-role">Senior Software Engineer / Frontend + Mobile</p><h1 id="hero-heading">Complex ideas.<br /><em>Remarkable software.</em></h1><p className="hero-intro">Turning complex requirements into secure, scalable web and mobile products with a strong focus on performance, security, accessibility, and user experience.</p><div className="hero-actions"><a className="button button-primary" href="#work">See selected work <span aria-hidden="true">↓</span></a><a className="text-link" href="https://www.linkedin.com/in/maybelle-catolin" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a></div><div className="hero-proof" aria-label="Career proof points"><div><strong>11</strong><span>products shipped</span></div><div><strong>8+</strong><span>years in the craft</span></div><div><strong>3</strong><span>teams led with</span></div></div></div><div className="hero-art" aria-label="Abstract portrait of Maybelle Catolin" role="img"><div className="art-caption">Iloilo, Philippines<br /><span>10°43&apos;N / 122°33&apos;E</span></div><div className="portrait-shape"><span>MC</span></div><div className="art-note">11<br /><span>PRODUCTS<br />SHIPPED</span></div><div className="orbit orbit-one" /><div className="orbit orbit-two" /></div></section>;
+  return (
+    <section className={styles.hero} aria-labelledby="hero-heading">
+      <div className={styles.main}>
+        <div className={styles.meta}>
+          <p className={styles.pill}>
+            <span className={styles.dot} aria-hidden="true" />
+            Open to new roles · Remote
+          </p>
+          <p className={styles.role}>
+            <span className={styles.nowrap}>Senior Software Engineer /</span>{" "}
+            <span className={styles.nowrap}>Frontend + Mobile</span>
+          </p>
+        </div>
+
+        <div
+          className={styles.art}
+          aria-label="Laptop, dashboard, mobile app, and coffee arranged around a software engineering workspace"
+          role="img"
+        >
+          <HeroIllustration />
+        </div>
+
+        <div className={styles.content}>
+          <h1 id="hero-heading" className={styles.heading}>
+            <span className={styles.line}>Every vision</span>{" "}
+            <em>
+              <span className={styles.line}>deserves great</span>{" "}
+              <span className={styles.line}>Software.</span>
+            </em>
+          </h1>
+          <p className={styles.intro}>
+            Turning complex requirements into secure, scalable web and mobile
+            products, built for performance, accessibility, and exceptional user
+            experience.
+          </p>
+          <div className={styles.actions}>
+            <a className={styles.button} href="#work">
+              View my work <span aria-hidden="true">↓</span>
+            </a>
+            <a
+              className={styles.textLink}
+              href="mailto:catolinmaybelle@gmail.com?subject=CV%20request"
+            >
+              Request CV <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <ul className={styles.stats} aria-label="Career highlights">
+        {heroStats.map((stat) => (
+          <li className={styles.stat} key={stat.label}>
+            <strong className={styles.statValue}>{stat.value}</strong>
+            <span className={styles.statLabel}>{stat.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }

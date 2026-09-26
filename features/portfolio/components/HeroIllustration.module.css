@@ -1,0 +1,67 @@
+.scene {
+  max-width: 1200px;
+  position: relative;
+  width: 100%;
+}
+
+.layer {
+  position: absolute;
+  will-change: transform;
+}
+
+.layer :global(img) {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+.dashboardFloat {
+  animation: dashboard-float 6s ease-in-out infinite;
+}
+
+.phoneFloat {
+  animation: phone-float 5s ease-in-out -1.5s infinite;
+}
+
+.coffeeFloat {
+  animation: coffee-float 5.7s ease-in-out -2.2s infinite;
+  transform-origin: bottom center;
+}
+
+.steam {
+  animation: steam-rise 3.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes dashboard-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0); }
+  50% { transform: translate3d(0, -8%, 0) rotate(-1.2deg); }
+}
+
+@keyframes phone-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0); }
+  50% { transform: translate3d(0, 7%, 0) rotate(1.4deg); }
+}
+
+@keyframes coffee-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0); }
+  50% { transform: translate3d(-5%, -7%, 0) rotate(-1.5deg); }
+}
+
+@keyframes steam-rise {
+  0%, 100% { opacity: .9; transform: translate3d(0, 0, 0); }
+  50% { opacity: .4; transform: translate3d(0, -16%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboardFloat, .phoneFloat, .coffeeFloat, .steam {
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .scene {
+    transform: scale(1.08);
+    transform-origin: center;
+  }
+}

@@ -1,0 +1,309 @@
+/*
+ * Hero layout — mobile-first, always fills the first viewport.
+ *   < 720px  single column: meta → illustration → content; stats sit below the fold
+ *   ≥ 720px  two columns (copy | illustration) with stats inside the viewport
+ *            (2×2 on tablet, a single row of 4 from 900px)
+ * Horizontal edges come from the shared --gutter / --frame tokens in globals.css,
+ * so the hero always lines up with the site header.
+ */
+
+.hero {
+  display: grid;
+  margin: 0 auto;
+  width: min(100% - 2 * var(--frame), var(--container));
+}
+
+.main {
+  align-content: center;
+  display: grid;
+  grid-template-areas:
+    "meta"
+    "art"
+    "content";
+  grid-template-columns: minmax(0, 1fr);
+  min-height: calc(100svh - var(--header-h));
+  row-gap: 12px;
+  /* The illustration is scaled up slightly on phones (HeroIllustration.module.css). */
+  overflow-x: clip;
+  padding: 24px var(--gutter) 20px;
+}
+
+/* ——— Meta: availability + role ——— */
+
+.meta {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  grid-area: meta;
+}
+
+.pill {
+  align-items: center;
+  border: 1px solid rgba(31, 39, 35, 0.14);
+  border-radius: 999px;
+  color: #4f5652;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 600;
+  gap: 8px;
+  line-height: 1;
+  margin: 0;
+  padding: 8px 12px;
+}
+
+.dot {
+  animation: pulse 2.4s ease-in-out infinite;
+  background: #43a66d;
+  border-radius: 50%;
+  flex: none;
+  height: 7px;
+  width: 7px;
+}
+
+.role {
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ——— Illustration ——— */
+
+.art {
+  grid-area: art;
+  justify-self: center;
+  max-width: 560px;
+  width: 100%;
+}
+
+/* ——— Content: heading, intro, actions ——— */
+
+.content {
+  grid-area: content;
+}
+
+.heading {
+  font-size: clamp(42px, 10.5vw, 64px);
+  line-height: 0.92;
+  margin: 0 0 24px;
+}
+
+/* Each phrase is its own line at every size; no <br> or nowrap hacks needed. */
+.line {
+  display: block;
+}
+
+.intro {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 42ch;
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 28px;
+  margin-top: 32px;
+}
+
+.button {
+  align-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 700;
+  gap: 24px;
+  letter-spacing: 0.06em;
+  min-height: 48px;
+  padding: 0 20px;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.button:hover {
+  background: var(--coral);
+}
+
+.textLink {
+  align-items: center;
+  border-bottom: 1px solid currentColor;
+  display: inline-flex;
+  font-size: 12px;
+  gap: 6px;
+  padding-block: 6px 4px;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.textLink:hover {
+  color: var(--coral);
+}
+
+.textLink span {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.button:focus-visible,
+.textLink:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
+}
+
+/* ——— Stats strip ——— */
+
+.stats {
+  border-block: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 16px 20px 20px;
+}
+
+/* First column shares the page gutter so stat text lines up with the copy above. */
+.stat:nth-child(odd) {
+  border-right: 1px solid var(--line);
+  padding-left: var(--gutter);
+}
+
+.stat:nth-child(-n + 2) {
+  border-bottom: 1px solid var(--line);
+}
+
+.statValue {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 6.5vw, 36px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  max-width: 26ch;
+  text-transform: uppercase;
+}
+
+/* ——— Very small phones: keep both actions on one line ——— */
+
+@media (max-width: 360px) {
+  .actions {
+    column-gap: 14px;
+  }
+
+  .button {
+    gap: 16px;
+    padding: 0 16px;
+  }
+}
+
+/* ——— ≥ 720px: side-by-side hero; the whole section fills the viewport ——— */
+
+@media (min-width: 720px) {
+  .hero {
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: calc(100svh - var(--header-h));
+  }
+
+  .main {
+    column-gap: clamp(24px, 4vw, 64px);
+    grid-template-areas:
+      "meta art"
+      "content art";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    min-height: 0;
+    padding-block: clamp(28px, 6vh, 72px);
+    row-gap: 0;
+  }
+
+  .meta {
+    margin-bottom: 16px;
+  }
+
+  .art {
+    align-self: center;
+    justify-self: end;
+    max-width: 664px;
+  }
+
+  .heading {
+    font-size: clamp(44px, 6.5vw, 54px);
+  }
+}
+
+/* ——— ≥ 900px: larger type and a single row of stats ——— */
+
+@media (min-width: 900px) {
+  .heading {
+    font-size: clamp(56px, 5.6vw, 88px);
+  }
+
+  .intro {
+    font-size: 16px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat,
+  .stat:nth-child(odd),
+  .stat:nth-child(-n + 2) {
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+    padding: 24px 16px 24px clamp(16px, 2.5vw, 40px);
+  }
+
+  .stat:first-child {
+    padding-left: var(--gutter);
+  }
+
+  .stat:last-child {
+    border-right: 0;
+  }
+
+  .statValue {
+    font-size: clamp(28px, 2.7vw, 40px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 5px 2px rgba(67, 166, 109, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 10px 4px rgba(67, 166, 109, 0.55);
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot {
+    animation: none;
+  }
+}
