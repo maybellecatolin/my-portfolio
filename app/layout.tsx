@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Maybelle Catolin | Senior Software Engineer",
+  title: "Maybelle Catolin | Software Engineer",
   description: "Portfolio of Maybelle Catolin, a senior software engineer focused on frontend and mobile experiences.",
 };
 

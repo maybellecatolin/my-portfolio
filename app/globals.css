@@ -31,6 +31,8 @@
 }
 html {
   scroll-behavior: smooth;
+  /* Anchor jumps land below the sticky header. */
+  scroll-padding-top: var(--header-h);
 }
 body {
   margin: 0;
@@ -43,76 +45,15 @@ a {
   text-decoration: none;
 }
 .site-shell {
-  overflow: hidden;
+  /* clip (not hidden) so the sticky header keeps working. */
+  overflow-x: clip;
 }
-.site-header {
-  align-items: center;
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  min-height: var(--header-h);
-  padding-inline: var(--gutter);
-  width: min(100% - 2 * var(--frame), var(--container));
-}
-@media (min-width: 900px) {
-  /* Three-column grid keeps the nav truly centred regardless of side widths. */
-  .site-header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-  }
-  .header-link {
-    justify-self: end;
-  }
-}
-@media (max-width: 899px) {
-  .header-link {
-    display: none;
-  }
-}
-.wordmark,
-.main-nav,
-.header-link {
-  font-size: 12px;
-  letter-spacing: 0.01em;
-}
-.wordmark {
-  align-items: center;
-  display: flex;
-  font-weight: 700;
-  gap: 10px;
-}
-.wordmark-mark {
-  align-items: center;
-  background: var(--ink);
-  color: var(--paper);
-  display: flex;
-  font-family: Georgia, serif;
-  font-size: 11px;
-  height: 27px;
-  justify-content: center;
-  letter-spacing: -0.08em;
-  width: 27px;
-}
-.main-nav {
-  display: flex;
-  gap: 30px;
-}
-.main-nav a,
-.header-link,
 .arrow-link {
   transition: color 0.2s ease;
 }
-.main-nav a:hover,
-.header-link:hover,
 .arrow-link:hover {
   color: var(--coral);
 }
-.header-link {
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 3px;
-}
-.header-link span,
 .arrow-link span {
   font-size: 16px;
   margin-left: 5px;
@@ -452,9 +393,6 @@ h2 em {
   text-transform: uppercase;
 }
 @media (max-width: 800px) {
-  .main-nav {
-    gap: 15px;
-  }
   .section-wrap {
     padding-left: 20px;
     padding-right: 20px;
@@ -507,12 +445,6 @@ h2 em {
   }
 }
 @media (max-width: 450px) {
-  .wordmark span:last-child {
-    display: none;
-  }
-  .main-nav {
-    font-size: 11px;
-  }
   .portrait-shape {
     height: 270px;
     width: 210px;

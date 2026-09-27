@@ -1,18 +1,35 @@
+import { contact, navItems } from "@/features/portfolio/data";
+
+import { MobileMenu } from "./MobileMenu";
+import styles from "./SiteHeader.module.css";
+import { StickyHeader } from "./StickyHeader";
+import { Wordmark } from "./Wordmark";
+
 export function SiteHeader() {
   return (
-    <header className="site-header">
-      <a className="wordmark" href="#top" aria-label="Maybelle Catolin home">
-        <span className="wordmark-mark">MC</span>
-        <span>Maybelle Catolin</span>
+    <>
+      <a className={styles.skipLink} href="#top">
+        Skip to content
       </a>
-      <nav className="main-nav" aria-label="Main navigation">
-        <a href="#work">Portfolio</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a className="header-link" href="mailto:catolinmaybelle@gmail.com">
-        Let&apos;s talk <span aria-hidden="true">↗</span>
-      </a>
-    </header>
+      <StickyHeader className={styles.header}>
+        <div className={styles.bar}>
+          <Wordmark />
+
+          <nav className={styles.nav} aria-label="Main navigation">
+            {navItems.map((item) => (
+              <a className={styles.navLink} href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* <a className={styles.cta} href={`mailto:${contact.email}`}>
+            Let&apos;s talk <span aria-hidden="true">↗</span>
+          </a> */}
+
+          <MobileMenu />
+        </div>
+      </StickyHeader>
+    </>
   );
 }

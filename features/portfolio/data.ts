@@ -1,3 +1,14 @@
+export const contact = {
+  email: "catolinmaybelle@gmail.com",
+  location: "Iloilo, Philippines",
+} as const;
+
+export const navItems = [
+  { label: "Portfolio", href: "#work" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
+] as const;
+
 export const heroStats = [
   { value: "8+", label: "Years shipping production apps" },
   { value: "11+", label: "Products delivered" },
