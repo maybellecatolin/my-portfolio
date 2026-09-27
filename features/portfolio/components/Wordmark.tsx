@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import styles from "./SiteHeader.module.css";
 
@@ -8,7 +9,7 @@ type WordmarkProps = {
 
 export function Wordmark({ onClick }: WordmarkProps) {
   return (
-    <a className={styles.wordmark} href="#top" aria-label="Maybelle Catolin, back to top" onClick={onClick}>
+    <Link className={styles.wordmark} href="/#top" aria-label="Maybelle Catolin, back to top" onClick={onClick}>
       <Image
         className={styles.wordmarkLogo}
         src="/brand/mc-logo.png"
@@ -17,6 +18,6 @@ export function Wordmark({ onClick }: WordmarkProps) {
         height={32}
       />
       <span className={styles.wordmarkName}>Maybelle Catolin</span>
-    </a>
+    </Link>
   );
 }

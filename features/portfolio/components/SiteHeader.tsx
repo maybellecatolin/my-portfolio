@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { contact, navItems } from "@/features/portfolio/data";
 
 import { MobileMenu } from "./MobileMenu";
@@ -17,9 +19,9 @@ export function SiteHeader() {
 
           <nav className={styles.nav} aria-label="Main navigation">
             {navItems.map((item) => (
-              <a className={styles.navLink} href={item.href} key={item.href}>
+              <Link className={styles.navLink} href={item.href} key={item.href}>
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

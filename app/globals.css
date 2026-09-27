@@ -60,8 +60,6 @@ a {
 }
 .eyebrow,
 .section-kicker,
-.project-type,
-.visual-label,
 .timeline-date,
 .art-caption,
 .art-note {
@@ -93,9 +91,9 @@ h2 em {
 }
 .section-wrap {
   margin: 0 auto;
-  max-width: 1280px;
-  padding-left: 48px;
-  padding-right: 48px;
+  /* Same edges as the header and hero (tokens in :root). */
+  padding-inline: var(--gutter);
+  width: min(100% - 2 * var(--frame), var(--container));
 }
 .work-section {
   padding-bottom: 150px;
@@ -124,140 +122,6 @@ h2 em {
   line-height: 1.6;
   margin: 8px 0 0;
   max-width: 265px;
-}
-.project-grid {
-  display: grid;
-  gap: 29px;
-  grid-template-columns: 1.25fr 1fr 1fr;
-}
-.project-card {
-  min-width: 0;
-}
-.project-visual {
-  height: 280px;
-  overflow: hidden;
-  position: relative;
-}
-.project-visual::after {
-  border: 1px solid rgba(31, 39, 35, 0.33);
-  content: "";
-  inset: 15px;
-  pointer-events: none;
-  position: absolute;
-}
-.identity-visual {
-  background: var(--coral);
-}
-.sport-visual {
-  background: #d7c79f;
-}
-.roots-visual {
-  background: #aebdc9;
-}
-.visual-label {
-  left: 23px;
-  position: absolute;
-  top: 22px;
-  z-index: 2;
-}
-.visual-index {
-  bottom: 20px;
-  font:
-    italic 34px Georgia,
-    serif;
-  position: absolute;
-  right: 24px;
-  z-index: 2;
-}
-.scan-card {
-  background: var(--paper);
-  height: 110px;
-  left: 23%;
-  padding: 18px;
-  position: absolute;
-  top: 82px;
-  transform: rotate(-7deg);
-  width: 55%;
-  z-index: 1;
-}
-.scan-card b {
-  color: var(--coral);
-  float: right;
-  font-size: 26px;
-}
-.scan-corner {
-  border-left: 2px solid var(--coral);
-  border-top: 2px solid var(--coral);
-  display: block;
-  height: 26px;
-  width: 26px;
-}
-.sport-ball {
-  align-items: center;
-  background: var(--ink);
-  border-radius: 50%;
-  color: var(--paper);
-  display: flex;
-  font-size: 75px;
-  font-weight: 200;
-  height: 145px;
-  justify-content: center;
-  left: 32%;
-  position: absolute;
-  top: 76px;
-  transform: rotate(15deg);
-  width: 145px;
-  z-index: 1;
-}
-.chart-line {
-  display: flex;
-  align-items: end;
-  gap: 13px;
-  height: 140px;
-  left: 22%;
-  position: absolute;
-  top: 76px;
-  transform: rotate(-12deg);
-  z-index: 1;
-}
-.chart-line i {
-  background: var(--ink);
-  display: block;
-  width: 19px;
-}
-.chart-line i:nth-child(1) {
-  height: 38px;
-}
-.chart-line i:nth-child(2) {
-  height: 61px;
-}
-.chart-line i:nth-child(3) {
-  height: 49px;
-}
-.chart-line i:nth-child(4) {
-  height: 100px;
-}
-.chart-line i:nth-child(5) {
-  height: 132px;
-}
-.project-info {
-  padding: 22px 0 0;
-}
-.project-type {
-  color: #65716b;
-  margin-bottom: 11px;
-}
-.project-info h3 {
-  font:
-    400 31px Georgia,
-    serif;
-  letter-spacing: -0.04em;
-  margin-bottom: 9px;
-}
-.project-info > p:not(.project-type) {
-  font-size: 13px;
-  line-height: 1.55;
-  max-width: 310px;
 }
 .arrow-link {
   display: inline-block;
@@ -393,10 +257,6 @@ h2 em {
   text-transform: uppercase;
 }
 @media (max-width: 800px) {
-  .section-wrap {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
   .work-section {
     padding-bottom: 90px;
     padding-top: 90px;
@@ -408,13 +268,6 @@ h2 em {
   }
   .section-heading > p:last-child {
     margin-top: 25px;
-  }
-  .project-grid {
-    grid-template-columns: 1fr;
-  }
-  .project-visual {
-    height: 265px;
-    margin-top: 38px;
   }
   .experience-section,
   .capabilities-section {
@@ -467,25 +320,6 @@ h2 em {
   .footer-email {
     font-size: 18px;
   }
-}
-.project-highlights {
-  border-top: 1px solid var(--line);
-  list-style: none;
-  margin: 20px 0 0;
-  padding: 13px 0 0;
-}
-.project-highlights li {
-  font-size: 11px;
-  line-height: 1.45;
-  margin-bottom: 6px;
-  padding-left: 13px;
-  position: relative;
-}
-.project-highlights li::before {
-  color: var(--coral);
-  content: "↳";
-  left: 0;
-  position: absolute;
 }
 .timeline-item small {
   color: var(--coral);
@@ -547,11 +381,6 @@ h2 em {
   color: var(--coral);
   content: "↳";
   margin-right: 7px;
-}
-@media (max-width: 800px) {
-  .project-highlights {
-    max-width: 430px;
-  }
 }
 @media (max-width: 800px) {
   .archive-heading {

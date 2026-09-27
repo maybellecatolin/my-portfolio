@@ -1,0 +1,434 @@
+/*
+ * Case-study page: intro → full-width gallery → content | sticky facts aside → pager.
+ * Horizontal edges use the shared --frame / --gutter tokens, matching the header.
+ */
+
+.page {
+  --back-h: 52px;
+}
+
+.wrap,
+.pager,
+.hero,
+.backInner {
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  width: min(100% - 2 * var(--frame), var(--container));
+}
+
+/* ——— Back link ———
+   Upper left on every screen. Below 1024px it pins under the header (frosted),
+   so "All projects" is always one tap away while reading. */
+
+.backBar {
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  backdrop-filter: saturate(1.4) blur(12px);
+  background: rgba(242, 239, 232, 0.86);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: var(--header-h);
+  z-index: 20;
+}
+
+.backInner {
+  align-items: center;
+  display: flex;
+  height: var(--back-h);
+}
+
+/* ——— Opening screen ———
+   Phones: intro → gallery → overview, in a natural stack.
+   ≥ 768px: text column (intro, overview) beside the gallery, filling exactly
+   one viewport below the header and back link. */
+
+.hero {
+  display: grid;
+  gap: 24px;
+  grid-template-areas:
+    "intro"
+    "media"
+    "overview";
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: 24px 64px;
+}
+
+.back {
+  align-items: center;
+  color: #4f5652;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 700;
+  gap: 8px;
+  letter-spacing: 0.08em;
+  min-height: 44px;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.back:hover {
+  color: var(--coral-strong);
+}
+
+.back span {
+  transition: transform 0.2s ease;
+}
+
+.back:hover span {
+  transform: translateX(-4px);
+}
+
+.intro {
+  grid-area: intro;
+}
+
+.kicker {
+  color: var(--coral-strong);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: clamp(48px, 11vw, 88px);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  margin: 0 0 16px;
+  text-wrap: balance;
+}
+
+.tagline {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(19px, 2.2vw, 24px);
+  font-style: italic;
+  line-height: 1.35;
+  margin: 0;
+  max-width: 32ch;
+  text-wrap: balance;
+}
+
+.media {
+  grid-area: media;
+  margin-block: 8px;
+}
+
+.overviewBlock {
+  border-top: 1px solid var(--line);
+  grid-area: overview;
+  padding-top: 20px;
+}
+
+.overview {
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* Load-in: CSS so it runs on first paint. */
+.intro,
+.media,
+.overviewBlock {
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.media {
+  animation-delay: 0.15s;
+}
+
+.overviewBlock {
+  animation-delay: 0.25s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ——— Body ——— */
+
+.body {
+  display: grid;
+  gap: 48px;
+}
+
+.section + .section {
+  margin-top: 56px;
+}
+
+.sectionTitle,
+.asideTitle {
+  color: var(--coral-strong);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0 0 20px;
+  text-transform: uppercase;
+}
+
+.part + .part {
+  margin-top: 40px;
+}
+
+.partTitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin: 0 0 12px;
+}
+
+.contributions {
+  counter-reset: item;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contributions li {
+  border-top: 1px solid var(--line);
+  counter-increment: item;
+  display: grid;
+  font-size: 15px;
+  gap: 16px;
+  grid-template-columns: 32px minmax(0, 1fr);
+  line-height: 1.6;
+  padding-block: 16px;
+}
+
+.contributions li::before {
+  color: var(--coral-strong);
+  content: counter(item, decimal-leading-zero);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding-top: 4px;
+}
+
+.builtWith {
+  border-top: 1px solid var(--line);
+  color: #4f5652;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  padding-top: 16px;
+}
+
+.builtWith span {
+  color: var(--ink);
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* ——— Aside ——— */
+
+.aside {
+  align-self: start;
+}
+
+.facts {
+  border-top: 1px solid var(--ink);
+  margin: 0;
+}
+
+.facts div {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 96px minmax(0, 1fr);
+  padding-block: 14px;
+}
+
+.facts dt {
+  color: #4f5652;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding-top: 2px;
+  text-transform: uppercase;
+}
+
+.facts dd {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.visit {
+  align-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  font-size: 12px;
+  font-weight: 700;
+  justify-content: space-between;
+  letter-spacing: 0.06em;
+  margin-top: 24px;
+  min-height: 48px;
+  padding: 0 18px;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+}
+
+.visit:hover {
+  background: var(--coral-strong);
+}
+
+.stackBlock {
+  margin-top: 40px;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stack li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+}
+
+/* ——— Pager ——— */
+
+.pager {
+  display: grid;
+  margin-top: 96px;
+}
+
+.pagerLink {
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-block: 28px;
+  transition: color 0.2s ease;
+}
+
+.pagerLink:hover {
+  color: var(--coral-strong);
+}
+
+.pagerLabel {
+  color: #4f5652;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pagerName {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.back:focus-visible,
+.visit:focus-visible,
+.pagerLink:focus-visible {
+  outline: 2px solid var(--coral-strong);
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  .pager {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pagerNext {
+    align-items: flex-end;
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .pagerLink + .pagerNext {
+    border-left: 1px solid var(--line);
+  }
+}
+
+/* Tablets and up: two-column opening, like desktop. */
+@media (min-width: 768px) {
+  .hero {
+    align-content: center;
+    column-gap: clamp(28px, 5vw, 80px);
+    grid-template-areas:
+      "intro media"
+      "overview media";
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    grid-template-rows: auto auto;
+    min-height: calc(100svh - var(--header-h) - var(--back-h));
+    padding-block: 24px 40px;
+    row-gap: 20px;
+  }
+
+  .media {
+    align-self: center;
+    margin: 0;
+  }
+
+  /* Scales with height too, so long names still fit on short screens. */
+  .title {
+    font-size: clamp(40px, min(6vw, 10vh), 96px);
+  }
+
+  .tagline {
+    font-size: clamp(17px, min(1.7vw, 3vh), 24px);
+  }
+
+  .overview {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Desktop: back link sits in the page flow, not pinned. */
+  .backBar {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: none;
+    border-bottom: 0;
+    position: static;
+  }
+
+  .body {
+    gap: 80px;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 1fr);
+  }
+
+  .aside {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back span {
+    transition: none;
+  }
+
+  .intro,
+  .media,
+  .overviewBlock {
+    animation: none;
+  }
+}
+
+.overviewBlock .sectionTitle {
+  margin-bottom: 12px;
+}

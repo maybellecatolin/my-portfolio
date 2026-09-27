@@ -1,0 +1,238 @@
+/* ——— Phones: each project is a soft, tinted card with its own carousel ——— */
+
+.list {
+  display: grid;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  background: #ebe6dc;
+  border: 1px solid rgba(31, 39, 35, 0.06);
+  border-radius: 16px;
+  min-width: 0;
+  padding: 10px 10px 20px;
+}
+
+/* Inset image with corners that follow the card's (outer radius minus padding). */
+.inlineMedia {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.item .text {
+  padding-inline: 8px;
+}
+
+.panel {
+  display: none;
+}
+
+.text {
+  padding-top: 20px;
+  position: relative;
+}
+
+.meta {
+  align-items: center;
+  color: #4f5652;
+  display: flex;
+  font-size: 10px;
+  font-weight: 700;
+  gap: 12px;
+  letter-spacing: 0.14em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 7vw, 44px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+
+.link {
+  transition: color 0.3s ease;
+}
+
+.link::after {
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--coral-strong);
+  outline-offset: 6px;
+}
+
+.summary {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+  max-width: 46ch;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.stack li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+}
+
+.footer {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  color: #4f5652;
+  display: flex;
+  font-size: 11px;
+  font-weight: 600;
+  gap: 16px;
+  justify-content: space-between;
+  letter-spacing: 0.04em;
+  margin: 0;
+  max-width: 520px;
+  padding-top: 14px;
+}
+
+.cta {
+  color: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 4px;
+  transition: transform 0.25s ease;
+}
+
+.item:hover .arrow {
+  transform: translateX(4px);
+}
+
+.item:hover .link {
+  color: var(--coral-strong);
+}
+
+/* ——— Tablet and desktop: list on the left, pinned crossfading panel on the right ——— */
+
+@media (min-width: 768px) {
+  .showcase {
+    display: grid;
+    gap: clamp(40px, 5vw, 80px);
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .inlineMedia {
+    display: none;
+  }
+
+  .list {
+    gap: 0;
+  }
+
+  /* Cards give way to an open list, separated by space alone. Each project gets
+     enough scroll distance to hold the panel for a moment. */
+  .item {
+    background: none;
+    border: 0;
+    border-radius: 0;
+    padding: clamp(40px, 9svh, 96px) 0;
+  }
+
+  .item .text {
+    padding-inline: 0;
+  }
+
+  .text {
+    padding-top: 0;
+  }
+
+  .title {
+    font-size: clamp(34px, 4.2vw, 64px);
+  }
+
+  /* Inactive projects recede; the active one is fully present. No layout shift. */
+  .meta,
+  .title,
+  .summary,
+  .stack,
+  .footer {
+    transition: opacity 0.5s ease;
+  }
+
+  .item:not([data-active="true"]) .meta,
+  .item:not([data-active="true"]) .summary,
+  .item:not([data-active="true"]) .stack,
+  .item:not([data-active="true"]) .footer {
+    opacity: 0.28;
+  }
+
+  .item:not([data-active="true"]) .title {
+    opacity: 0.4;
+  }
+
+  .item[data-active="true"] .link {
+    color: var(--ink);
+  }
+
+  .item[data-active="true"]:hover .link {
+    color: var(--coral-strong);
+  }
+
+  .panel {
+    display: block;
+  }
+
+  /* Pinned just below the header at its natural height, so it stays in place
+     through the last project and starts level with the first one. */
+  .panelInner {
+    position: sticky;
+    top: calc(var(--header-h) + clamp(24px, 8svh, 96px));
+  }
+
+  .stage {
+    aspect-ratio: 16 / 10;
+    position: relative;
+  }
+
+  .layer {
+    inset: 0;
+    position: absolute;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow,
+  .link,
+  .meta,
+  .title,
+  .summary,
+  .stack,
+  .footer {
+    transition: none;
+  }
+}

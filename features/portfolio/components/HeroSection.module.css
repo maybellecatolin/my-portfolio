@@ -314,8 +314,48 @@
   }
 }
 
+/* ——— Load-in: CSS (not JS) so it runs on first paint without waiting for hydration ——— */
+
+.meta,
+.art,
+.content,
+.stats {
+  animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.meta {
+  animation-delay: 0.05s;
+}
+
+.content {
+  animation-delay: 0.15s;
+}
+
+.art {
+  animation-delay: 0.3s;
+}
+
+.stats {
+  animation-delay: 0.45s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .dot {
+  .dot,
+  .meta,
+  .art,
+  .content,
+  .stats {
     animation: none;
   }
 }

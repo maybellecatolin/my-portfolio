@@ -4,9 +4,9 @@ export const contact = {
 } as const;
 
 export const navItems = [
-  { label: "Portfolio", href: "#work" },
-  { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#work" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 export const heroStats = [
@@ -14,12 +14,6 @@ export const heroStats = [
   { value: "11+", label: "Products delivered" },
   { value: "iOS + Android", label: "Store releases owned end to end" },
   { value: "5 industries", label: "Digital identity, banking, insurance, fintech, sports" },
-] as const;
-
-export const projects = [
-  { name: "SQR", type: "React Native · React · Security", description: "Digital identity verification across a secure mobile app and an operational web dashboard.", highlights: ["Native biometric and liveness SDK integration", "App Attest + Play Integrity defense-in-depth", "Fastlane + GitHub Actions release pipeline"], label: "SQR / DIGITAL IDENTITY", visual: "identity-visual", number: "01", link: "#experience", linkLabel: "View contribution", featured: true, external: false },
-  { name: "FindiSport", type: "React Native · Firebase · Team lead", description: "A cross-platform marketplace connecting students with sports coaches and experts.", highlights: ["Led mobile delivery from concept to stores", "Booking, payments, messaging, and scheduling", "Firebase workflows and automated notifications"], label: "FINDISPORT / HONG KONG", visual: "sport-visual", number: "02", link: "#experience", linkLabel: "View contribution", featured: false, external: false },
-  { name: "HK Roots", type: "React · Node.js · MongoDB", description: "A digital mortgage platform and calculator helping homebuyers find a clearer path forward.", highlights: ["Bank-specific mortgage form automation", "Property recommendations from collected listings", "React, FeathersJS, MongoDB, and AWS delivery"], label: "HK ROOTS / FINANCE", visual: "roots-visual", number: "03", link: "https://hkroots.io", linkLabel: "Visit project", featured: false, external: true },
 ] as const;
 
 export const experience = [

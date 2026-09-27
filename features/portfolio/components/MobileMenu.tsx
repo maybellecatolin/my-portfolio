@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { contact, navItems } from "@/features/portfolio/data";
@@ -72,10 +73,10 @@ export function MobileMenu() {
             <ul className={styles.menuList}>
               {navItems.map((item, index) => (
                 <li key={item.href} style={{ "--i": index } as CSSProperties}>
-                  <a className={styles.menuLink} href={item.href} onClick={close}>
+                  <Link className={styles.menuLink} href={item.href} onClick={close}>
                     {item.label}
                     <span className={styles.menuArrow} aria-hidden="true">→</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,0 +1,45 @@
+/* Work section heading. The project list itself lives in ProjectShowcase. */
+
+.heading {
+  margin-bottom: 56px;
+}
+
+.headingTitle {
+  font-size: clamp(42px, 5.4vw, 76px);
+  line-height: 0.95;
+  margin: 16px 0 0;
+}
+
+.line {
+  display: block;
+}
+
+.headingIntro {
+  margin-top: 24px;
+}
+
+.headingIntro p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 52ch;
+}
+
+@media (min-width: 1024px) {
+  /* Kicker in the left column; heading + intro share the wide right column. */
+  .heading {
+    column-gap: 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    margin-bottom: 72px;
+  }
+
+  .headingTitle,
+  .headingIntro {
+    grid-column: 2;
+  }
+
+  .headingTitle {
+    margin-top: 0;
+  }
+}
