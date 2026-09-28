@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
+import { Analytics } from "@/components/common/Analytics";
 import { MotionProvider } from "@/components/common/MotionProvider";
 import { site, siteUrl } from "@/features/portfolio/site";
 
@@ -46,6 +47,10 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
+// Google Analytics loads only in production builds with a measurement ID set, so
+// local development never sends data.
+const gaId = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_GA_ID : undefined;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -56,6 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <MotionProvider>{children}</MotionProvider>
       </body>
+      {gaId && <Analytics gaId={gaId} />}
     </html>
   );
 }

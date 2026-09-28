@@ -28,10 +28,10 @@ export default function NotFound() {
           The link may be old or mistyped. Everything else is right where you left it.
         </p>
         <div className={styles.actions}>
-          <Link className={styles.primary} href="/">
+          <Link className={styles.primary} href="/" data-track="cta_click" data-track-label="404_home">
             Back to home
           </Link>
-          <Link className={styles.secondary} href="/#work">
+          <Link className={styles.secondary} href="/#work" data-track="cta_click" data-track-label="404_work">
             View my work <span aria-hidden="true">→</span>
           </Link>
         </div>

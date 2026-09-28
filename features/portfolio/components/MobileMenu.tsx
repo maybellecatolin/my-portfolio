@@ -80,6 +80,9 @@ export function MobileMenu() {
                     href={`/#${item.id}`}
                     onClick={close}
                     aria-current={item.id === activeSection ? "true" : undefined}
+                    data-track="nav_click"
+                    data-track-section={item.id}
+                    data-track-location="mobile_menu"
                   >
                     {item.label}
                     <span className={styles.menuArrow} aria-hidden="true">→</span>
@@ -94,7 +97,13 @@ export function MobileMenu() {
               <span className={styles.statusDot} aria-hidden="true" />
               Open to new roles · Remote
             </p>
-            <a className={styles.panelEmail} href={`mailto:${contact.email}`}>
+            <a
+              className={styles.panelEmail}
+              href={`mailto:${contact.email}`}
+              data-track="contact_click"
+              data-track-method="email"
+              data-track-location="mobile_menu"
+            >
               {contact.email}
             </a>
             <p className={styles.panelMeta}>{contact.location}</p>

@@ -48,7 +48,14 @@ export function RecommendationCard({ item, href }: RecommendationCardProps) {
         {expanded ? "Show less" : "Read more"}
       </button>
       <figcaption className={styles.person}>
-        <a className={styles.name} href={href} target="_blank" rel="noreferrer">
+        <a
+          className={styles.name}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          data-track="recommendation_click"
+          data-track-person={item.name}
+        >
           {item.name}
           <span className={styles.srOnly}> (recommendation on LinkedIn, opens in a new tab)</span>
         </a>

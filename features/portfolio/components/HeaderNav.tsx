@@ -19,6 +19,9 @@ export function HeaderNav() {
           href={`/#${item.id}`}
           key={item.id}
           aria-current={item.id === active ? "true" : undefined}
+          data-track="nav_click"
+          data-track-section={item.id}
+          data-track-location="header"
         >
           {item.label}
         </Link>

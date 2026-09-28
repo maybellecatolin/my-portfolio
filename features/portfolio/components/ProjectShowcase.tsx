@@ -85,7 +85,13 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                 <p className={styles.meta}>{project.industry}</p>
                 <h3 className={styles.title}>
                   {/* Stretched link: its ::after makes the whole text block clickable. */}
-                  <Link className={styles.link} href={href}>
+                  <Link
+                    className={styles.link}
+                    href={href}
+                    data-track="project_open"
+                    data-track-project={project.slug}
+                    data-track-location="work_list"
+                  >
                     {project.name}
                   </Link>
                 </h3>

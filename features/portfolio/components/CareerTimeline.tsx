@@ -79,7 +79,13 @@ export function CareerTimeline({ items }: CareerTimelineProps) {
             <ul className={styles.projects}>
               {item.projects.map((project) => (
                 <li key={`${project.name}-${project.detail}`}>
-                  <Link className={styles.projectLink} href={`/projects/${project.slug}`}>
+                  <Link
+                    className={styles.projectLink}
+                    href={`/projects/${project.slug}`}
+                    data-track="project_open"
+                    data-track-project={project.slug}
+                    data-track-location="experience"
+                  >
                     <span className={styles.projectName}>{project.name}</span>
                     <span className={styles.projectDetail}>{project.detail}</span>
                     <span className={styles.projectArrow} aria-hidden="true">

@@ -74,14 +74,30 @@ export function ProjectDetail({ project }: { project: Project }) {
               <ul className={styles.stores} aria-label="Download the app">
                 {project.stores.appStore && (
                   <li>
-                    <a className={styles.store} href={project.stores.appStore} target="_blank" rel="noreferrer">
+                    <a
+                      className={styles.store}
+                      href={project.stores.appStore}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-track="store_click"
+                      data-track-store="app_store"
+                      data-track-project={project.slug}
+                    >
                       <Image src="/badges/app-store.svg" alt="Download on the App Store" width={120} height={40} />
                     </a>
                   </li>
                 )}
                 {project.stores.googlePlay && (
                   <li>
-                    <a className={styles.store} href={project.stores.googlePlay} target="_blank" rel="noreferrer">
+                    <a
+                      className={styles.store}
+                      href={project.stores.googlePlay}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-track="store_click"
+                      data-track-store="google_play"
+                      data-track-project={project.slug}
+                    >
                       <Image src="/badges/google-play.png" alt="Get it on Google Play" width={134} height={40} />
                     </a>
                   </li>
@@ -92,7 +108,15 @@ export function ProjectDetail({ project }: { project: Project }) {
               <ul className={styles.socials} aria-label="Follow the project">
                 {project.socials.instagram && (
                   <li>
-                    <a className={styles.social} href={project.socials.instagram} target="_blank" rel="noreferrer">
+                    <a
+                      className={styles.social}
+                      href={project.socials.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-track="social_click"
+                      data-track-network="instagram"
+                      data-track-project={project.slug}
+                    >
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <rect x="3" y="3" width="18" height="18" rx="5" />
                         <circle cx="12" cy="12" r="4" />
@@ -104,7 +128,15 @@ export function ProjectDetail({ project }: { project: Project }) {
                 )}
                 {project.socials.facebook && (
                   <li>
-                    <a className={styles.social} href={project.socials.facebook} target="_blank" rel="noreferrer">
+                    <a
+                      className={styles.social}
+                      href={project.socials.facebook}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-track="social_click"
+                      data-track-network="facebook"
+                      data-track-project={project.slug}
+                    >
                       <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                       </svg>
@@ -116,7 +148,14 @@ export function ProjectDetail({ project }: { project: Project }) {
             )}
             {project.link && (
               <p className={styles.socials}>
-                <a className={styles.social} href={project.link.href} target="_blank" rel="noreferrer">
+                <a
+                  className={styles.social}
+                  href={project.link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track="website_click"
+                  data-track-project={project.slug}
+                >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <circle cx="12" cy="12" r="9" />
                     <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
@@ -173,14 +212,26 @@ export function ProjectDetail({ project }: { project: Project }) {
 
         <nav className={styles.pager} aria-label="More projects">
           {previous && (
-            <Link className={styles.pagerLink} href={`/projects/${previous.slug}`}>
+            <Link
+              className={styles.pagerLink}
+              href={`/projects/${previous.slug}`}
+              data-track="project_open"
+              data-track-project={previous.slug}
+              data-track-location="pager_previous"
+            >
               <span className={styles.pagerLabel}>
                 <span aria-hidden="true">←</span> Previous
               </span>
               <span className={styles.pagerName}>{previous.name}</span>
             </Link>
           )}
-          <Link className={`${styles.pagerLink} ${styles.pagerNext}`} href={`/projects/${next.slug}`}>
+          <Link
+            className={`${styles.pagerLink} ${styles.pagerNext}`}
+            href={`/projects/${next.slug}`}
+            data-track="project_open"
+            data-track-project={next.slug}
+            data-track-location="pager_next"
+          >
             <span className={styles.pagerLabel}>
               Next <span aria-hidden="true">→</span>
             </span>

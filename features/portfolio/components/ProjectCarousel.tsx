@@ -134,7 +134,15 @@ export function ProjectCarousel({
               >
                 {href ? (
                   // The card title is the accessible link; slide links are pointer/touch shortcuts.
-                  <Link className={styles.slideLink} href={href} tabIndex={-1} aria-hidden="true">
+                  <Link
+                    className={styles.slideLink}
+                    href={href}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                    data-track="project_open"
+                    data-track-project={href.split("/").pop()}
+                    data-track-location="work_carousel"
+                  >
                     {picture}
                   </Link>
                 ) : (

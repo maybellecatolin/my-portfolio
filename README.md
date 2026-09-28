@@ -80,12 +80,34 @@ Screens for projects under NDA are illustrative mockups, labelled as such on the
 - `sitemap.xml` (with image entries) and `robots.txt` are generated at build time.
 - The 404 page is excluded from indexing.
 
+## Analytics
+
+Google Analytics 4 loads when `NEXT_PUBLIC_GA_ID` is set, and only in production builds, so local development never sends data.
+
+- **Page views** are recorded automatically, including client-side navigation. In GA, keep Enhanced Measurement's "Page changes based on browser history events" option on.
+- **Clicks**: any element with `data-track="event_name"` sends that event, and its `data-track-*` attributes become parameters (see `components/common/Analytics.tsx`). Events in use:
+
+| Event                  | Parameters            | Sent from                                                   |
+| ---------------------- | --------------------- | ----------------------------------------------------------- |
+| `nav_click`            | `section`, `location` | Header and mobile menu links                                |
+| `cta_click`            | `label`               | "View my work", 404 page buttons                            |
+| `contact_click`        | `method`, `location`  | Email, LinkedIn and "Request CV" links                      |
+| `project_open`         | `project`, `location` | Work list, carousel images, Experience rows, project pager  |
+| `store_click`          | `store`, `project`    | App Store / Google Play badges                              |
+| `social_click`         | `network`, `project`  | Instagram / Facebook links                                  |
+| `website_click`        | `project`             | Project website links                                       |
+| `recommendation_click` | `person`              | Recommender name links                                      |
+
+To break reports down by these parameters, register them in GA under **Admin → Custom definitions → Custom dimensions** (event scope): `section`, `location`, `label`, `method`, `project`, `store`, `network`, `person`.
+
 ## Deployment
 
 The site builds to static pages and deploys anywhere that runs Next.js. [Vercel](https://vercel.com) needs no configuration.
 
 1. Import the repository in Vercel.
-2. Set `NEXT_PUBLIC_SITE_URL` to your domain, e.g. `https://maybellecatolin.com` (see `.env.example`). This drives canonical links, social previews and the sitemap. Without it, Vercel's production domain is used.
+2. Set the environment variables (see `.env.example`):
+   - `NEXT_PUBLIC_SITE_URL`: your domain, e.g. `https://maybellecatolin.com`. This drives canonical links, social previews and the sitemap. Without it, Vercel's production domain is used.
+   - `NEXT_PUBLIC_GA_ID`: your GA4 measurement ID (`G-…`), to turn on analytics.
 3. Deploy. After going live, check a link preview with LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/) and submit `/sitemap.xml` in Google Search Console.
 
 ## Performance and accessibility notes

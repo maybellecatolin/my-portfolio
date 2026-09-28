@@ -45,12 +45,15 @@ export function HeroSection() {
             experience.
           </p>
           <div className={styles.actions}>
-            <a className={styles.button} href="#work">
+            <a className={styles.button} href="#work" data-track="cta_click" data-track-label="view_work">
               View my work <span aria-hidden="true">↓</span>
             </a>
             <a
               className={styles.textLink}
               href={`mailto:${contact.email}?subject=CV%20request`}
+              data-track="contact_click"
+              data-track-method="cv_request"
+              data-track-location="hero"
             >
               Request CV <span aria-hidden="true">↗</span>
             </a>

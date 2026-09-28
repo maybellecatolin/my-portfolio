@@ -11,13 +11,26 @@ export function SiteFooter() {
           <br />
           <em>what&apos;s next.</em>
         </h2>
-        <a className="footer-email" href={`mailto:${contact.email}`}>
+        <a
+          className="footer-email"
+          href={`mailto:${contact.email}`}
+          data-track="contact_click"
+          data-track-method="email"
+          data-track-location="footer"
+        >
           {contact.email} <span aria-hidden="true">↗</span>
         </a>
         <div className="footer-meta">
           <span>© {new Date().getFullYear()} Maybelle Catolin</span>
           <span>{contact.location}</span>
-          <a href={contact.linkedin} target="_blank" rel="noreferrer">
+          <a
+            href={contact.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            data-track="contact_click"
+            data-track-method="linkedin"
+            data-track-location="footer"
+          >
             LinkedIn <span aria-hidden="true">↗</span>
           </a>
         </div>
