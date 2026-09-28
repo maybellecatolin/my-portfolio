@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-import { contact, navItems } from "@/features/portfolio/data";
+import { contact, navItems, sectionIds } from "@/features/portfolio/data";
+import { useActiveSection } from "@/features/portfolio/hooks/useActiveSection";
 
 import styles from "./SiteHeader.module.css";
 import { Wordmark } from "./Wordmark";
@@ -19,6 +20,7 @@ const DESKTOP_QUERY = "(min-width: 1024px)";
 export function MobileMenu() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const activeSection = useActiveSection(sectionIds);
 
   const open = () => {
     dialogRef.current?.showModal();
@@ -72,8 +74,13 @@ export function MobileMenu() {
           <nav aria-label="Mobile navigation">
             <ul className={styles.menuList}>
               {navItems.map((item, index) => (
-                <li key={item.href} style={{ "--i": index } as CSSProperties}>
-                  <Link className={styles.menuLink} href={item.href} onClick={close}>
+                <li key={item.id} style={{ "--i": index } as CSSProperties}>
+                  <Link
+                    className={styles.menuLink}
+                    href={`/#${item.id}`}
+                    onClick={close}
+                    aria-current={item.id === activeSection ? "true" : undefined}
+                  >
                     {item.label}
                     <span className={styles.menuArrow} aria-hidden="true">→</span>
                   </Link>
@@ -83,9 +90,6 @@ export function MobileMenu() {
           </nav>
 
           <div className={styles.panelFoot}>
-            {/* <a className={styles.panelCta} href={`mailto:${contact.email}`}>
-              Let&apos;s talk <span aria-hidden="true">↗</span>
-            </a> */}
             <p className={styles.panelStatus}>
               <span className={styles.statusDot} aria-hidden="true" />
               Open to new roles · Remote

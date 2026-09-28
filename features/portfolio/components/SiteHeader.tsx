@@ -1,7 +1,4 @@
-import Link from "next/link";
-
-import { contact, navItems } from "@/features/portfolio/data";
-
+import { HeaderNav } from "./HeaderNav";
 import { MobileMenu } from "./MobileMenu";
 import styles from "./SiteHeader.module.css";
 import { StickyHeader } from "./StickyHeader";
@@ -17,17 +14,7 @@ export function SiteHeader() {
         <div className={styles.bar}>
           <Wordmark />
 
-          <nav className={styles.nav} aria-label="Main navigation">
-            {navItems.map((item) => (
-              <Link className={styles.navLink} href={item.href} key={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* <a className={styles.cta} href={`mailto:${contact.email}`}>
-            Let&apos;s talk <span aria-hidden="true">↗</span>
-          </a> */}
+          <HeaderNav />
 
           <MobileMenu />
         </div>

@@ -95,10 +95,9 @@
   color: var(--coral-strong);
 }
 
-/* ——— Desktop nav + CTA (hidden below 1024px) ——— */
+/* ——— Desktop nav (hidden below 1024px) ——— */
 
-.nav,
-.cta {
+.nav {
   display: none;
 }
 
@@ -129,34 +128,19 @@
 }
 
 .navLink:hover::after,
-.navLink:focus-visible::after {
+.navLink:focus-visible::after,
+.navLink[aria-current="true"]::after {
   transform: scaleX(1);
 }
 
-.cta {
-  align-items: center;
-  border: 1px solid var(--ink);
-  font-size: 12px;
-  font-weight: 600;
-  gap: 8px;
-  justify-self: end;
-  letter-spacing: 0.02em;
-  min-height: 38px;
-  padding: 0 14px;
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
-  white-space: nowrap;
+/* The section in view: full-strength text with a coral underline. */
+.navLink[aria-current="true"] {
+  color: var(--ink);
 }
 
-.cta span {
-  font-size: 14px;
-  line-height: 1;
-}
-
-.cta:hover {
-  background: var(--ink);
-  color: var(--paper);
+.navLink[aria-current="true"]::after {
+  background: var(--coral);
+  height: 2px;
 }
 
 /* ——— Burger ——— */
@@ -365,7 +349,8 @@
 }
 
 .menuLink:hover,
-.menuLink:focus-visible {
+.menuLink:focus-visible,
+.menuLink[aria-current="true"] {
   color: var(--coral-strong);
 }
 
@@ -380,31 +365,6 @@
   gap: 12px;
   margin-top: auto;
   padding-top: 40px;
-}
-
-.panelCta {
-  align-items: center;
-  background: var(--ink);
-  color: var(--paper);
-  display: flex;
-  font-size: 12px;
-  font-weight: 700;
-  justify-content: space-between;
-  letter-spacing: 0.06em;
-  margin-bottom: 12px;
-  min-height: 52px;
-  padding: 0 20px;
-  text-transform: uppercase;
-  transition: background-color 0.2s ease;
-}
-
-.panelCta span {
-  font-size: 16px;
-  line-height: 1;
-}
-
-.panelCta:hover {
-  background: var(--coral-strong);
 }
 
 .panelStatus {
@@ -445,12 +405,10 @@
 /* ——— Focus + skip link ——— */
 
 .navLink:focus-visible,
-.cta:focus-visible,
 .wordmark:focus-visible,
 .burger:focus-visible,
 .close:focus-visible,
 .menuLink:focus-visible,
-.panelCta:focus-visible,
 .panelEmail:focus-visible {
   outline: 2px solid var(--coral-strong);
   outline-offset: 3px;
@@ -489,11 +447,7 @@
 
   .nav {
     display: flex;
-    gap: 32px;
-  }
-
-  .cta {
-    display: inline-flex;
+    gap: clamp(20px, 2.2vw, 32px);
   }
 
   .burger {
