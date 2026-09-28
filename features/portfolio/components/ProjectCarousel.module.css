@@ -60,10 +60,9 @@
   transform: scale(1.05);
 }
 
-/* ——— Controls: revealed on hover/focus with a pointer, always shown on touch ——— */
+/* ——— Arrows: revealed on hover/focus with a pointer, always shown on touch ——— */
 
-.arrow,
-.dots {
+.arrow {
   opacity: 0;
   transition:
     opacity 0.25s ease,
@@ -71,15 +70,12 @@
 }
 
 .frame:hover .arrow,
-.frame:hover .dots,
-.frame:focus-within .arrow,
-.frame:focus-within .dots {
+.frame:focus-within .arrow {
   opacity: 1;
 }
 
 @media (hover: none) {
-  .arrow,
-  .dots {
+  .arrow {
     opacity: 1;
   }
 }
@@ -117,6 +113,7 @@
   right: 14px;
 }
 
+/* Dots stay visible without hover, so visitors can see how many slides there are. */
 .dots {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
@@ -200,7 +197,6 @@
 
   .image,
   .arrow,
-  .dots,
   .dot::before {
     transition: none;
   }

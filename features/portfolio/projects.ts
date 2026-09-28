@@ -40,6 +40,8 @@ export type Project = {
   disclaimer?: string;
   /** Store listings, shown as badges under the case-study overview. */
   stores?: { appStore?: string; googlePlay?: string };
+  /** Social profiles, shown as icon links under the case-study overview. */
+  socials?: { instagram?: string; facebook?: string };
   /** Short stack shown on the card. */
   cardStack: readonly string[];
   images: readonly ProjectImage[];
@@ -252,8 +254,8 @@ export const projects: readonly Project[] = [
   {
     slug: "findisport",
     name: "FindiSport",
-    summary: "A Hong Kong marketplace connecting students with sports coaches, on mobile, admin and web.",
-    tagline: "Connecting Hong Kong students with sports coaches, on three platforms.",
+    summary: "Find Your Coach | Any Sport | Anytime | Anywhere",
+    tagline: "Find Your Coach | Any Sport | Anytime | Anywhere",
     overview:
       "FindiSport helps students across Hong Kong discover sports activities, book qualified coaches and improve their performance. As team lead I took the cross-platform app from concept to both app stores, built the admin portal that runs the business, and developed the marketing website that drives user acquisition.",
     industry: "Sports tech · Marketplace",
@@ -262,13 +264,13 @@ export const projects: readonly Project[] = [
     role: "Team Lead & Software Engineer",
     timeline: "Feb 2020 – Jun 2021",
     location: "Hong Kong",
-    link: { href: "https://findisport.com", label: "Visit findisport.com" },
+    socials: {
+      instagram: "https://www.instagram.com/findisport/",
+      facebook: "https://www.facebook.com/findisport/",
+    },
     cardStack: ["React Native", "Firebase", "React", "WordPress"],
     images: images("findisport", [
-      ["Coach discovery", "FindiSport coach discovery screen"],
-      ["Booking & scheduling", "FindiSport booking flow"],
-      ["Admin portal", "FindiSport admin portal"],
-      ["Marketing website", "FindiSport marketing website"],
+      ["Find your coach, any sport", "FindiSport app home screen with sport categories, beside the App Store and Google Play badges"],
     ]),
     parts: [
       {
