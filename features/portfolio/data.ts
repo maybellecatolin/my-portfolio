@@ -16,16 +16,52 @@ export const heroStats = [
   { value: "5 industries", label: "Digital identity, banking, insurance, fintech, sports" },
 ] as const;
 
-export const experience = [
-  { date: "2022 — now", company: "Cloud Employee", role: "React Developer", details: "Digital identity · React Native · Vite · TypeScript", scope: "Security architecture · CI/CD ownership · WCAG", current: true },
-  { date: "2021 — 2022", company: "Yondu Inc", role: "Software Engineer · React", details: "Insurance · Mobile banking · Node.js", scope: "Feature delivery · API middleware · Code reviews", current: false },
-  { date: "2018 — 2021", company: "Stacktrek Enterprise", role: "Software Engineer", details: "Sports tech · Finance · Team leadership", scope: "Team lead · Product delivery · iOS + Android releases", current: false },
-] as const;
-
-export const projectArchive = [
-  { company: "Cloud Employee", projects: ["SQR Mobile Application", "SQR Web Admin Dashboard"] },
-  { company: "Yondu Inc", projects: ["Project Oreo", "Airline + Insurance Ecommerce", "MCC Project / PH Mobile Banking"] },
-  { company: "Stacktrek Enterprise", projects: ["FindiSport Mobile App", "FindiSport Website", "FindiSport Admin Portal", "HK Roots", "HK Roots Mortgage Calculator", "Virtual Control"] },
+/** Career timeline: one entry per company, with the products delivered there. */
+export const career = [
+  {
+    company: "Cloud Employee",
+    role: "React Developer",
+    period: "2022 — Present",
+    current: true,
+    summary: "Securing digital identity onboarding across a React Native app and a React operator dashboard.",
+    domains: ["Digital identity", "React Native", "React", "TypeScript"],
+    scope: ["Security architecture", "CI/CD ownership", "Store releases", "WCAG accessibility"],
+    projects: [
+      { name: "SQR", detail: "Mobile app · React Native", slug: "sqr" },
+      { name: "SQR", detail: "Admin dashboard · React", slug: "sqr" },
+    ],
+  },
+  {
+    company: "Yondu Inc",
+    role: "Software Engineer · React",
+    period: "2021 — 2022",
+    current: false,
+    summary: "Shipping features for major Philippine banking, insurance and airline products.",
+    domains: ["Insurance", "Mobile banking", "E-commerce", "Node.js"],
+    scope: ["Feature delivery", "API middleware", "Code reviews", "Production support"],
+    projects: [
+      { name: "Insurance Mobile App", detail: "React Native · Node.js", slug: "insurance-app" },
+      { name: "Airline Insurance E-commerce", detail: "React · Node.js", slug: "airline-insurance-ecommerce" },
+      { name: "Mobile Banking App", detail: "React Native", slug: "mobile-banking" },
+    ],
+  },
+  {
+    company: "Stacktrek Enterprise",
+    role: "Software Engineer · Team Lead",
+    period: "2018 — 2021",
+    current: false,
+    summary: "Leading and building products for Hong Kong clients in sports tech, property finance and security.",
+    domains: ["Sports tech", "Fintech", "Security", "Firebase"],
+    scope: ["Team leadership", "Product delivery", "iOS + Android releases", "AWS deployment"],
+    projects: [
+      { name: "FindiSport", detail: "Mobile app · React Native", slug: "findisport" },
+      { name: "FindiSport", detail: "Admin portal · React", slug: "findisport" },
+      { name: "FindiSport", detail: "Marketing website · WordPress", slug: "findisport" },
+      { name: "HK Roots", detail: "Mortgage platform · React", slug: "hk-roots" },
+      { name: "HK Roots", detail: "Mortgage calculator · React", slug: "hk-roots" },
+      { name: "Virtual Control", detail: "Video management · React", slug: "virtual-control" },
+    ],
+  },
 ] as const;
 
 export const capabilities = [

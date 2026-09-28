@@ -1,6 +1,34 @@
+import { Reveal } from "@/components/common/Reveal";
 import { SectionKicker } from "@/components/common/SectionKicker";
-import { experience, projectArchive } from "@/features/portfolio/data";
+import { career } from "@/features/portfolio/data";
+
+import { CareerTimeline } from "./CareerTimeline";
+import styles from "./ExperienceSection.module.css";
 
 export function ExperienceSection() {
-  return <section className="experience-section section-wrap" id="experience" aria-labelledby="experience-heading"><div className="section-heading compact-heading"><SectionKicker>02 / The throughline</SectionKicker><h2 id="experience-heading">A practice built<br /><em>on good questions.</em></h2></div><div className="experience-content"><p className="pull-quote">“Translate complex business requirements into scalable technical solutions.”</p><div className="timeline">{experience.map((item) => <div className={`timeline-item ${item.current ? "current" : ""}`} key={item.company}><div className="timeline-date">{item.date}</div><div><h3>{item.company}</h3><p>{item.role}</p><span>{item.details}</span><small>{item.scope}</small></div></div>)}</div><div className="project-archive"><div className="archive-heading"><span>Project index</span><strong>11 projects · 3 companies</strong></div>{projectArchive.map((group) => <div className="archive-group" key={group.company}><h3>{group.company}</h3><ul>{group.projects.map((project) => <li key={project}>{project}</li>)}</ul></div>)}</div></div></section>;
+  return (
+    <section className={`section-wrap ${styles.section}`} id="experience" aria-labelledby="experience-heading">
+      <div className={styles.intro}>
+        <Reveal>
+          <SectionKicker>Track record</SectionKicker>
+        </Reveal>
+        <h2 className={styles.heading} id="experience-heading">
+          <Reveal as="span" className={styles.line} delay={0.08}>
+            Grounded in experience,
+          </Reveal>{" "}
+          <Reveal as="span" className={styles.line} delay={0.16}>
+            <em>driven by quality.</em>
+          </Reveal>
+        </h2>
+        <Reveal delay={0.24}>
+          <blockquote className={styles.quote}>
+            <p>“Experience is my foundation. Quality is my standard.”</p>
+          </blockquote>
+        </Reveal>
+      </div>
+
+      {/* Each company reveals itself on scroll inside the timeline. */}
+      <CareerTimeline items={career} />
+    </section>
+  );
 }
