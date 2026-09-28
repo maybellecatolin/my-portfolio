@@ -1,9 +1,11 @@
 /*
  * Recommendations: a full-screen chapter on the dark sheet.
- * Cards stack below 1024px (full text). From 1024px, three cards sit in one row,
- * each showing its opening lines; on hover (or keyboard focus) the card lifts out
- * of the row and unfolds its full text over the page, so nothing below moves.
- * Every card links to the recommendations on LinkedIn.
+ * Cards stack below 1024px. Every card shows its opening lines first.
+ * - Desktop with a pointer: three cards in one row; on hover (or keyboard focus)
+ *   the card spans the row and unfolds its full text over the page, so nothing
+ *   below moves. The whole card links to LinkedIn.
+ * - Phones, tablets and touch screens: a tap (or Read more) expands the card in
+ *   place; only the name links to LinkedIn.
  */
 
 .section {
@@ -91,6 +93,10 @@
   margin: 0;
 }
 
+.text + .text {
+  margin-top: 0.9em;
+}
+
 .person {
   border-top: 1px solid var(--line-on-ink);
   display: flex;
@@ -101,24 +107,34 @@
 }
 
 .name {
+  align-self: flex-start;
   font-size: 15px;
   font-weight: 700;
 }
 
-/* Stretched link: the whole card opens LinkedIn. */
-.name::after {
-  border-radius: 16px;
-  content: "";
-  inset: 0;
-  position: absolute;
-  z-index: 1;
-}
-
 .name:focus-visible {
-  outline: none;
+  outline: 2px solid var(--coral);
+  outline-offset: 3px;
 }
 
-.name:focus-visible::after {
+/* Read more / Show less: only where cards expand on tap (see below). */
+.toggle {
+  align-self: flex-start;
+  background: none;
+  border: 0;
+  color: var(--coral);
+  cursor: pointer;
+  display: none;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin: -16px 0 20px;
+  padding: 6px 0;
+  text-transform: uppercase;
+}
+
+.toggle:focus-visible {
   outline: 2px solid var(--coral);
   outline-offset: 3px;
 }
@@ -185,19 +201,81 @@
   }
 }
 
-/* Clamp + hover-to-expand only where hover exists (desktop with a pointer). */
+/* Phones, tablets and touch screens: each card starts at 7 lines and expands in
+   place on tap. The name alone links to LinkedIn, so a tap elsewhere toggles. */
+@media (max-width: 1023px), (hover: none) {
+  .card {
+    cursor: pointer;
+  }
+
+  .toggle {
+    display: block;
+  }
+
+  /* The card itself isn't a link here, so no "LinkedIn" hint. */
+  .linkedinHint {
+    display: none;
+  }
+
+  .card[data-expanded="false"] .quote {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
+    max-height: calc(17px * 1.6 * 7);
+    overflow: hidden;
+  }
+}
+
+/* Clamp + hover-to-expand only where hover exists (desktop with a pointer). The
+   whole quote is cut at 7 lines (17px × 1.6), so it works across paragraphs, and
+   the last line fades out. */
 @media (min-width: 1024px) and (hover: hover) {
-  .text {
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    line-clamp: 7;
+  /* Stretched link: the whole card opens LinkedIn. */
+  .name::after {
+    border-radius: 16px;
+    content: "";
+    inset: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .name:focus-visible {
+    outline: none;
+  }
+
+  .name:focus-visible::after {
+    outline: 2px solid var(--coral);
+    outline-offset: 3px;
+  }
+
+  .quote {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
+    max-height: calc(17px * 1.6 * 7);
     overflow: hidden;
   }
 
-  /* The row keeps its height (the list item stays put); the card lifts out and grows. */
+  .item:hover .quote,
+  .item:focus-within .quote {
+    -webkit-mask-image: none;
+    mask-image: none;
+    max-height: none;
+  }
+
+  /* The row keeps its height (the list items stay put); the hovered card lifts out
+     and spans the full row, covering its neighbours, with the text in two columns
+     so the lines stay a comfortable length. */
+  .grid {
+    position: relative;
+  }
+
+  .item {
+    position: static;
+  }
+
   .item:hover .reveal,
   .item:focus-within .reveal {
+    display: flex;
+    flex-direction: column;
     height: auto;
     left: 0;
     min-height: 100%;
@@ -207,17 +285,22 @@
     z-index: 5;
   }
 
+  /* Fill the row even when the full text is shorter than the resting cards. */
+  .item:hover .card,
+  .item:focus-within .card {
+    flex: 1 1 auto;
+  }
+
+  .item:hover .quote,
+  .item:focus-within .quote {
+    column-gap: 48px;
+    columns: 2;
+  }
+
   .item:hover .card,
   .item:focus-within .card {
     box-shadow: 0 28px 60px -20px rgba(0, 0, 0, 0.6);
     min-height: 100%;
-  }
-
-  .item:hover .text,
-  .item:focus-within .text {
-    display: block;
-    -webkit-line-clamp: unset;
-    line-clamp: unset;
   }
 }
 
