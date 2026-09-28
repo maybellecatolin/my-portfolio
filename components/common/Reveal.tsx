@@ -3,6 +3,8 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 
+import { revealEase } from "./motion";
+
 type RevealProps = {
   children: ReactNode;
   className?: string;
@@ -11,8 +13,6 @@ type RevealProps = {
   /** Use "span" inside headings and other phrasing content. */
   as?: "div" | "span";
 };
-
-export const revealEase = [0.2, 0.8, 0.2, 1] as const;
 
 /** Fades and lifts its content into place the first time it scrolls into view. */
 export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {

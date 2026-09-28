@@ -1,5 +1,5 @@
-type SectionKickerProps = { children: React.ReactNode };
+import type { ReactNode } from "react";
 
-export function SectionKicker({ children }: SectionKickerProps) {
+export function SectionKicker({ children }: { children: ReactNode }) {
   return <p className="section-kicker">{children}</p>;
 }

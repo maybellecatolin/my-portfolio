@@ -2,13 +2,22 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
-import { revealEase } from "@/components/common/Reveal";
+import { revealEase } from "@/components/common/motion";
+import { useActiveIndex } from "@/features/portfolio/hooks/useActiveIndex";
 import type { Project } from "@/features/portfolio/projects";
 
 import { ProjectCarousel } from "./ProjectCarousel";
 import styles from "./ProjectShowcase.module.css";
+
+type Pointer = {
+  index: number;
+  /** Whether the pointer/focus is currently on the list. */
+  onList: boolean;
+  /** The scroll-driven project at the moment the pointer was last updated. */
+  scrollActive: number;
+};
 
 /**
  * Sticky showcase.
@@ -19,39 +28,43 @@ import styles from "./ProjectShowcase.module.css";
  *   < 768px   Each project stacks with its own carousel (the panel is hidden).
  */
 export function ProjectShowcase({ projects }: { projects: readonly Project[] }) {
-  const [active, setActive] = useState(0);
-  const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  // Which project the panel shows:
+  // - while the mouse (or keyboard focus) is on the list, the project it's on;
+  // - after it leaves (e.g. to use the panel's carousel), that project stays until
+  //   the visitor scrolls to a different one;
+  // - otherwise, the project crossing the middle of the viewport.
+  const { active: scrollActive, register } = useActiveIndex();
+  const [pointer, setPointer] = useState<Pointer | null>(null);
+  const active = pointer && (pointer.onList || pointer.scrollActive === scrollActive) ? pointer.index : scrollActive;
 
-  // The item crossing the vertical centre of the viewport becomes active.
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.index));
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
+  const point = (index: number) =>
+    setPointer((current) =>
+      current?.onList && current.index === index ? current : { index, onList: true, scrollActive },
     );
-    itemRefs.current.forEach((item) => item && observer.observe(item));
-    return () => observer.disconnect();
-  }, []);
+  const leaveList = () => setPointer((current) => current && { ...current, onList: false, scrollActive });
 
   return (
     <div className={styles.showcase}>
-      <ol className={styles.list}>
+      <ol
+        className={styles.list}
+        onPointerLeave={leaveList}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) leaveList();
+        }}
+      >
         {projects.map((project, index) => {
           const href = `/projects/${project.slug}`;
           return (
             <li
               className={styles.item}
               data-active={index === active}
-              data-index={index}
               key={project.slug}
-              ref={(element) => {
-                itemRefs.current[index] = element;
-              }}
-              onPointerEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
+              ref={register(index)}
+              // Enter covers items scrolling under a still mouse; move re-asserts after a scroll.
+              // Touch has no hover, so there the panel follows scrolling only.
+              onPointerEnter={(event) => event.pointerType === "mouse" && point(index)}
+              onPointerMove={(event) => event.pointerType === "mouse" && point(index)}
+              onFocus={() => point(index)}
             >
               <div className={styles.inlineMedia}>
                 <ProjectCarousel

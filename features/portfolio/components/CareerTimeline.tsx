@@ -2,10 +2,11 @@
 
 import { motion, useScroll } from "motion/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
-import { revealEase } from "@/components/common/Reveal";
+import { revealEase } from "@/components/common/motion";
 import type { career } from "@/features/portfolio/data";
+import { useActiveIndex } from "@/features/portfolio/hooks/useActiveIndex";
 
 import styles from "./ExperienceSection.module.css";
 
@@ -22,24 +23,8 @@ type CareerTimelineProps = {
  */
 export function CareerTimeline({ items }: CareerTimelineProps) {
   const listRef = useRef<HTMLOListElement>(null);
-  const entryRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-
+  const { active, register } = useActiveIndex();
   const { scrollYProgress } = useScroll({ target: listRef, offset: ["start center", "end center"] });
-
-  // The entry crossing the vertical centre of the viewport becomes active.
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.index));
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
-    );
-    entryRefs.current.forEach((entry) => entry && observer.observe(entry));
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <ol className={styles.timeline} ref={listRef}>
@@ -51,11 +36,8 @@ export function CareerTimeline({ items }: CareerTimelineProps) {
           data-active={index === active}
           data-reached={index <= active}
           data-current={item.current}
-          data-index={index}
           key={item.company}
-          ref={(element: HTMLLIElement | null) => {
-            entryRefs.current[index] = element;
-          }}
+          ref={register(index)}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
