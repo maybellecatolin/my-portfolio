@@ -52,7 +52,11 @@ export const viewport: Viewport = {
 // pull requests) are excluded too; VERCEL_ENV is unset outside Vercel.
 const isProductionDeploy =
   process.env.NODE_ENV === "production" && (process.env.VERCEL_ENV ?? "production") === "production";
-const gaId = isProductionDeploy ? process.env.NEXT_PUBLIC_GA_ID : undefined;
+// Read on the server and passed down as a prop, so it needs no NEXT_PUBLIC_ prefix
+// (the prefixed name still works).
+const gaId = isProductionDeploy
+  ? process.env.GA_MEASUREMENT_ID?.trim() || process.env.NEXT_PUBLIC_GA_ID?.trim()
+  : undefined;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

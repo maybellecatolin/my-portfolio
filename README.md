@@ -86,7 +86,7 @@ Screens for projects under NDA are illustrative mockups, labelled as such on the
 
 ## Analytics
 
-Google Analytics 4 loads when `NEXT_PUBLIC_GA_ID` is set, and only in production builds, so local development never sends data. On Vercel, only the production deployment reports; preview deployments for branches and pull requests don't.
+Google Analytics 4 loads when `GA_MEASUREMENT_ID` is set, and only in production builds, so local development never sends data. On Vercel, only the production deployment reports; preview deployments for branches and pull requests don't.
 
 - **Page views** are recorded automatically, including client-side navigation. In GA, keep Enhanced Measurement's "Page changes based on browser history events" option on.
 - **Clicks**: any element with `data-track="event_name"` sends that event, and its `data-track-*` attributes become parameters (see `components/common/Analytics.tsx`). Events in use:
@@ -110,8 +110,8 @@ The site builds to static pages and deploys anywhere that runs Next.js. [Vercel]
 
 1. Import the repository in Vercel.
 2. Set the environment variables (see `.env.example`):
-   - `NEXT_PUBLIC_SITE_URL`: your domain, e.g. `https://maybellecatolin.com`. This drives canonical links, social previews and the sitemap. Without it, Vercel's production domain is used.
-   - `NEXT_PUBLIC_GA_ID`: your GA4 measurement ID (`G-…`), to turn on analytics.
+   - `SITE_URL`: your domain, e.g. `https://maybellecatolin.com`. This drives canonical links, social previews and the sitemap. Without it, Vercel's production domain is used.
+   - `GA_MEASUREMENT_ID`: your GA4 measurement ID (`G-…`), to turn on analytics.
 3. Deploy. After going live, check a link preview with LinkedIn's [Post Inspector](https://www.linkedin.com/post-inspector/) and submit `/sitemap.xml` in Google Search Console.
 
 ## Performance and accessibility notes

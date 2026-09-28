@@ -4,20 +4,25 @@ import { contact } from "@/features/portfolio/data";
  * Site-wide identity used for metadata, social previews, the sitemap and
  * structured data.
  *
- * The public URL comes from NEXT_PUBLIC_SITE_URL (set it to your custom domain).
+ * The public URL comes from SITE_URL (set it to your custom domain).
  * On Vercel it falls back to the project's production domain, and locally to
  * localhost, so canonical links and preview images always resolve.
  */
 function resolveSiteUrl(): URL {
-  // Empty values count as unset; a bare domain ("example.com") gets https://.
-  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim() || process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  // Only read on the server at build time, so it needs no NEXT_PUBLIC_ prefix (the
+  // prefixed name still works). Empty values count as unset; a bare domain
+  // ("example.com") gets https://.
+  const configured =
+    process.env.SITE_URL?.trim() ||
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
   if (!configured) return new URL("http://localhost:3000");
   const withProtocol = /^https?:\/\//i.test(configured) ? configured : `https://${configured}`;
   try {
     return new URL(withProtocol);
   } catch {
     throw new Error(
-      `NEXT_PUBLIC_SITE_URL is not a valid URL: "${configured}". Use a full address like https://example.com, or remove it.`,
+      `SITE_URL is not a valid URL: "${configured}". Use a full address like https://example.com, or remove it.`,
     );
   }
 }
