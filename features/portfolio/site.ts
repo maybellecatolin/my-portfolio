@@ -8,11 +8,21 @@ import { contact } from "@/features/portfolio/data";
  * On Vercel it falls back to the project's production domain, and locally to
  * localhost, so canonical links and preview images always resolve.
  */
-const vercelDomain = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+function resolveSiteUrl(): URL {
+  // Empty values count as unset; a bare domain ("example.com") gets https://.
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim() || process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (!configured) return new URL("http://localhost:3000");
+  const withProtocol = /^https?:\/\//i.test(configured) ? configured : `https://${configured}`;
+  try {
+    return new URL(withProtocol);
+  } catch {
+    throw new Error(
+      `NEXT_PUBLIC_SITE_URL is not a valid URL: "${configured}". Use a full address like https://example.com, or remove it.`,
+    );
+  }
+}
 
-export const siteUrl = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL ?? (vercelDomain ? `https://${vercelDomain}` : "http://localhost:3000"),
-);
+export const siteUrl = resolveSiteUrl();
 
 export const site = {
   name: "Maybelle Catolin",
