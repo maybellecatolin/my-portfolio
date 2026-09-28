@@ -48,8 +48,11 @@ export const viewport: Viewport = {
 };
 
 // Google Analytics loads only in production builds with a measurement ID set, so
-// local development never sends data.
-const gaId = process.env.NODE_ENV === "production" ? process.env.NEXT_PUBLIC_GA_ID : undefined;
+// local development never sends data. On Vercel, preview deployments (branches and
+// pull requests) are excluded too; VERCEL_ENV is unset outside Vercel.
+const isProductionDeploy =
+  process.env.NODE_ENV === "production" && (process.env.VERCEL_ENV ?? "production") === "production";
+const gaId = isProductionDeploy ? process.env.NEXT_PUBLIC_GA_ID : undefined;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
