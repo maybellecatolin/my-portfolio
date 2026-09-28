@@ -11,6 +11,12 @@ import styles from "./ProjectCarousel.module.css";
 
 const AUTO_PLAY_MS = 4000;
 
+// Wraps around at both ends. Smooth vs instant scrolling comes from CSS, so
+// reduced motion is respected.
+function scrollToSlide(track: HTMLElement | null, target: number, count: number) {
+  track?.scrollTo({ left: (((target % count) + count) % count) * track.clientWidth });
+}
+
 type ProjectCarouselProps = {
   images: readonly ProjectImage[];
   /** Project name, used in accessible labels. */
@@ -44,6 +50,9 @@ export function ProjectCarousel({
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [visible, setVisible] = useState(false);
+  // Once the visitor navigates themselves (swipe, arrow or dot), autoplay stops for
+  // good, so there's always a way to pause it, including on touch screens.
+  const [interacted, setInteracted] = useState(false);
   const reducedMotion = useReducedMotion();
   const count = images.length;
 
@@ -57,19 +66,14 @@ export function ProjectCarousel({
 
   // Depends on `index`, so the timer restarts after any manual navigation.
   useEffect(() => {
-    if (!autoPlay || hovered || focused || !visible || reducedMotion || count < 2) return;
-    const timer = window.setTimeout(() => {
-      const track = trackRef.current;
-      if (track) track.scrollTo({ left: ((index + 1) % count) * track.clientWidth });
-    }, AUTO_PLAY_MS);
+    if (!autoPlay || interacted || hovered || focused || !visible || reducedMotion || count < 2) return;
+    const timer = window.setTimeout(() => scrollToSlide(trackRef.current, index + 1, count), AUTO_PLAY_MS);
     return () => window.clearTimeout(timer);
-  }, [autoPlay, hovered, focused, visible, reducedMotion, count, index]);
+  }, [autoPlay, interacted, hovered, focused, visible, reducedMotion, count, index]);
 
-  // Smooth vs instant scrolling comes from CSS, so reduced-motion is respected.
   const goTo = (target: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    track.scrollTo({ left: ((target + count) % count) * track.clientWidth });
+    setInteracted(true);
+    scrollToSlide(trackRef.current, target, count);
   };
 
   const onScroll = () => {
@@ -92,7 +96,15 @@ export function ProjectCarousel({
       }}
     >
       <div className={styles.frame}>
-        <div className={styles.track} id={trackId} ref={trackRef} onScroll={onScroll}>
+        <div
+          className={styles.track}
+          id={trackId}
+          ref={trackRef}
+          onScroll={onScroll}
+          // A swipe, or a horizontal trackpad scroll, counts as navigating.
+          onTouchStart={() => setInteracted(true)}
+          onWheel={(event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && setInteracted(true)}
+        >
           {images.map((image, slideIndex) => {
             const contain = image.fit === "contain";
             const picture = (

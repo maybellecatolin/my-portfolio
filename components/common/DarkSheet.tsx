@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
+import { useScroll, useTransform } from "motion/react";
+import * as m from "motion/react-m";
 import { useRef, type ReactNode } from "react";
 
 import styles from "./DarkSheet.module.css";
@@ -17,8 +18,8 @@ export function DarkSheet({ children }: { children: ReactNode }) {
   const scale = useTransform(scrollYProgress, [0, 1], [0.94, 1]);
 
   return (
-    <motion.div className={styles.sheet} ref={ref} style={{ scale }}>
+    <m.div className={styles.sheet} ref={ref} style={{ scale }}>
       {children}
-    </motion.div>
+    </m.div>
   );
 }

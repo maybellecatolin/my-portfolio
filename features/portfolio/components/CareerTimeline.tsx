@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll } from "motion/react";
+import { useScroll } from "motion/react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { useRef } from "react";
 
@@ -28,10 +29,10 @@ export function CareerTimeline({ items }: CareerTimelineProps) {
 
   return (
     <ol className={styles.timeline} ref={listRef}>
-      <motion.span className={styles.progress} style={{ scaleY: scrollYProgress }} aria-hidden="true" />
+      <m.span className={styles.progress} style={{ scaleY: scrollYProgress }} aria-hidden="true" />
 
       {items.map((item, index) => (
-        <motion.li
+        <m.li
           className={styles.entry}
           data-active={index === active}
           data-reached={index <= active}
@@ -89,7 +90,7 @@ export function CareerTimeline({ items }: CareerTimelineProps) {
               ))}
             </ul>
           </div>
-        </motion.li>
+        </m.li>
       ))}
     </ol>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import type { ReactNode } from "react";
 
 import { revealEase } from "./motion";
@@ -16,7 +16,7 @@ type RevealProps = {
 
 /** Fades and lifts its content into place the first time it scrolls into view. */
 export function Reveal({ children, className, delay = 0, as = "div" }: RevealProps) {
-  const Component = as === "span" ? motion.span : motion.div;
+  const Component = as === "span" ? m.span : m.div;
   return (
     <Component
       className={className}

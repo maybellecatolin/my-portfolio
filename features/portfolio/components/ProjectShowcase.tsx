@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -75,7 +75,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                 />
               </div>
 
-              <motion.div
+              <m.div
                 className={styles.text}
                 initial={{ opacity: 0, y: 32 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -110,7 +110,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                     View project <span className={styles.arrow}>→</span>
                   </span>
                 </p>
-              </motion.div>
+              </m.div>
             </li>
           );
         })}
@@ -122,7 +122,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
             {projects.map((project, index) => {
               const isActive = index === active;
               return (
-                <motion.div
+                <m.div
                   className={styles.layer}
                   key={project.slug}
                   initial={false}
@@ -139,7 +139,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                     preload={index === 0}
                     autoPlay={isActive}
                   />
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
