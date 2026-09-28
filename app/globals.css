@@ -8,6 +8,10 @@
   --coral-strong: #b8431f;
   --sage: #a9b8a4;
   --line: rgba(31, 39, 35, 0.18);
+  /* Section surfaces: light → tint → light → dark, for chapter-like rhythm. */
+  --surface-sage: #e3e8dd;
+  --paper-muted-on-ink: rgba(242, 239, 232, 0.66);
+  --line-on-ink: rgba(242, 239, 232, 0.16);
   /* Layout tokens shared by the header and hero so their edges line up. */
   --container: 1280px;
   --frame: 0px;
@@ -31,14 +35,39 @@
 }
 html {
   scroll-behavior: smooth;
-  /* Anchor jumps land below the sticky header. */
-  scroll-padding-top: var(--header-h);
+}
+/* Anchor jumps land below the sticky header. (scroll-margin on the targets rather
+   than scroll-padding on <html>: the latter also scrolls the page whenever a
+   control inside the header itself receives focus.) */
+section[id],
+footer[id] {
+  scroll-margin-top: var(--header-h);
 }
 body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
   font-family: "Avenir Next", "Helvetica Neue", sans-serif;
+}
+/* Faint film grain over everything, so no surface reads as flat digital colour. */
+body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  content: "";
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  position: fixed;
+  z-index: 70;
+}
+/* Sage chapter: fades in from paper and back out, instead of a hard edge. */
+.surface-sage {
+  background: linear-gradient(
+    to bottom,
+    var(--paper),
+    var(--surface-sage) 180px,
+    var(--surface-sage) calc(100% - 180px),
+    var(--paper)
+  );
 }
 a {
   color: inherit;
@@ -48,20 +77,7 @@ a {
   /* clip (not hidden) so the sticky header keeps working. */
   overflow-x: clip;
 }
-.arrow-link {
-  transition: color 0.2s ease;
-}
-.arrow-link:hover {
-  color: var(--coral);
-}
-.arrow-link span {
-  font-size: 16px;
-  margin-left: 5px;
-}
-.eyebrow,
-.section-kicker,
-.art-caption,
-.art-note {
+.section-kicker {
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -95,79 +111,27 @@ h2 em {
   width: min(100% - 2 * var(--frame), var(--container));
 }
 .work-section {
+  /* Positioned so it paints above the hero's ambient glow as that fades into it. */
+  position: relative;
   padding-bottom: 150px;
   padding-top: 140px;
-}
-.section-heading {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr 1fr;
-  gap: 30px;
-  margin-bottom: 68px;
 }
 .section-kicker {
   color: var(--coral);
   font-weight: 700;
   margin: 6px 0;
 }
-.section-heading h2,
-.site-footer h2,
-.capability-intro h2 {
+.site-footer h2 {
   font-size: clamp(44px, 5vw, 72px);
   line-height: 0.93;
   margin: 0;
 }
-.section-heading > p:last-child {
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 8px 0 0;
-  max-width: 265px;
-}
-.arrow-link {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-top: 16px;
-  text-transform: uppercase;
-}
-.capabilities-section {
-  background: var(--ink);
-  color: var(--paper);
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 7%;
-  padding-bottom: 115px;
-  padding-top: 115px;
-}
-.capability-intro h2 {
-  margin-top: 50px;
-}
-.capability-list > div {
-  border-bottom: 1px solid rgba(242, 239, 232, 0.22);
-  display: grid;
-  grid-template-columns: 42px 1fr;
-  padding: 22px 0;
-}
-.capability-list > div:first-child {
-  border-top: 1px solid rgba(242, 239, 232, 0.22);
-}
-.capability-list span {
-  color: var(--coral);
-  font:
-    12px Georgia,
-    serif;
-}
-.capability-list h3 {
-  font:
-    400 22px Georgia,
-    serif;
-  margin: 0 0 6px;
-}
-.capability-list p {
-  color: rgba(242, 239, 232, 0.65);
-  font-size: 13px;
-  grid-column: 2;
-  margin: 0;
+/* Light closing chapter with a soft glow that echoes the hero. */
+.footer-surface {
+  background:
+    radial-gradient(60% 70% at 88% 18%, rgba(238, 104, 75, 0.16), transparent 70%),
+    radial-gradient(55% 65% at 8% 92%, rgba(169, 184, 164, 0.38), transparent 70%),
+    var(--paper);
 }
 .site-footer {
   padding-bottom: 42px;
@@ -177,7 +141,8 @@ h2 em {
   margin: 60px 0 42px;
 }
 .footer-email {
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid currentColor;
+  transition: color 0.2s ease;
   display: inline-block;
   font:
     24px Georgia,
@@ -189,8 +154,12 @@ h2 em {
   font-family: "Avenir Next", sans-serif;
   margin-left: 18px;
 }
+.footer-email:hover {
+  color: var(--coral-strong);
+}
 .footer-meta {
   border-top: 1px solid var(--line);
+  color: #4f5652;
   display: flex;
   font-size: 10px;
   justify-content: space-between;
@@ -203,20 +172,6 @@ h2 em {
   .work-section {
     padding-bottom: 90px;
     padding-top: 90px;
-  }
-  .section-heading,
-  .capabilities-section {
-    display: block;
-  }
-  .section-heading > p:last-child {
-    margin-top: 25px;
-  }
-  .capabilities-section {
-    padding-bottom: 85px;
-    padding-top: 85px;
-  }
-  .capability-intro h2 {
-    margin-top: 35px;
   }
   .site-footer {
     padding-top: 90px;
@@ -231,25 +186,6 @@ h2 em {
   }
 }
 @media (max-width: 450px) {
-  .portrait-shape {
-    height: 270px;
-    width: 210px;
-  }
-  .portrait-shape::before {
-    left: 75px;
-    top: 52px;
-  }
-  .portrait-shape::after {
-    height: 132px;
-    left: 50px;
-    top: 80px;
-    width: 102px;
-  }
-  .portrait-shape span {
-    bottom: 35px;
-    font-size: 40px;
-    left: 62px;
-  }
   .footer-email {
     font-size: 18px;
   }

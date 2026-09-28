@@ -1,0 +1,107 @@
+/*
+ * Toolkit on the dark sheet: every tool from the CV, grouped by category.
+ * One column on phones, two on tablets, three on desktop; tags brighten on hover.
+ */
+
+.section {
+  padding-block: 96px;
+}
+
+.heading {
+  margin-bottom: 48px;
+}
+
+.headingTitle {
+  font-size: clamp(42px, 5vw, 72px);
+  line-height: 0.95;
+  margin: 16px 0 0;
+}
+
+.line {
+  display: block;
+}
+
+.groups {
+  display: grid;
+  gap: 0 40px;
+  margin: 0;
+}
+
+.group {
+  border-top: 1px solid var(--line-on-ink);
+  padding-block: 20px 28px;
+}
+
+.category {
+  color: var(--coral);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.tools {
+  margin: 0;
+}
+
+.tools ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tools li {
+  border: 1px solid var(--line-on-ink);
+  border-radius: 999px;
+  color: rgba(242, 239, 232, 0.86);
+  font-size: 13px;
+  padding: 6px 12px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.tools li:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+@media (min-width: 768px) {
+  .groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-block: 128px;
+  }
+
+  .heading {
+    column-gap: 32px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    margin-bottom: 64px;
+  }
+
+  .headingTitle {
+    grid-column: 2;
+    margin-top: 0;
+  }
+
+  .groups {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tools li {
+    transition: none;
+  }
+}

@@ -1,6 +1,7 @@
 export const contact = {
   email: "catolinmaybelle@gmail.com",
   location: "Iloilo, Philippines",
+  linkedin: "https://www.linkedin.com/in/maybelle-catolin",
 } as const;
 
 export const navItems = [
@@ -64,8 +65,83 @@ export const career = [
   },
 ] as const;
 
-export const capabilities = [
-  ["Frontend architecture", "React, Next.js, TypeScript, Vite, TanStack Query, Zustand, Redux, and scalable component systems."],
-  ["Mobile craft", "React Native, native modules, Vision Camera, Firebase, release management, and App Store / Play Store publishing."],
-  ["Security & quality", "App Attest, Play Integrity, biometric identity flows, Jest, Vitest, Playwright, and WCAG accessibility."],
+/**
+ * LinkedIn recommendations. PLACEHOLDERS: replace each entry with the real text
+ * from https://www.linkedin.com/in/maybelle-catolin/details/recommendations/
+ * - text: the full recommendation. On desktop the card shows the first lines and
+ *   reveals the rest on hover; phones show it in full.
+ * - relationship: as LinkedIn phrases it, e.g. "Managed Maybelle directly"
+ */
+export const recommendations = [
+  {
+    name: "Recommender name",
+    title: "Role · Company",
+    relationship: "How you worked together",
+    text: "Paste the full recommendation from LinkedIn here.",
+  },
+  {
+    name: "Recommender name",
+    title: "Role · Company",
+    relationship: "How you worked together",
+    text: "Paste the full recommendation from LinkedIn here.",
+  },
+  {
+    name: "Recommender name",
+    title: "Role · Company",
+    relationship: "How you worked together",
+    text: "Paste the full recommendation from LinkedIn here.",
+  },
+] as const;
+
+export const linkedinRecommendationsUrl = `${contact.linkedin}/details/recommendations/`;
+
+/** Toolkit, taken from the CV's Technical Skills plus the tools named in its project lists. */
+export const toolkit = [
+  { category: "Languages", tools: ["TypeScript", "JavaScript (ES6+)", "HTML", "CSS"] },
+  { category: "Frontend", tools: ["React", "React Native", "Next.js", "Vite", "React Navigation"] },
+  {
+    category: "UI libraries",
+    tools: [
+      "Tailwind CSS",
+      "Material UI",
+      "Ant Design",
+      "Headless UI",
+      "Styled Components",
+      "Bootstrap",
+      "Semantic UI",
+      "React Native Elements",
+      "NativeBase",
+    ],
+  },
+  { category: "State & data", tools: ["Zustand", "Redux", "MobX", "TanStack Query", "React Hook Form", "Socket.IO"] },
+  {
+    category: "Mobile",
+    tools: [
+      "Expo",
+      "React Native Firebase",
+      "Vision Camera",
+      "Push notifications",
+      "Keychain",
+      "Apple App Attest",
+      "Play Integrity API",
+      "Native modules & SDKs",
+    ],
+  },
+  {
+    category: "Backend",
+    tools: ["Node.js", "REST APIs", "NestJS", "FeathersJS", "Firebase (Firestore, Functions, Storage)", "Stripe"],
+  },
+  { category: "Databases", tools: ["PostgreSQL", "MongoDB", "MySQL"] },
+  {
+    category: "Cloud & DevOps",
+    tools: ["AWS (EC2, S3, Kinesis, Elastic Beanstalk)", "Docker", "GitHub Actions", "Fastlane", "OpenShift"],
+  },
+  {
+    category: "Testing",
+    tools: ["Jest", "Vitest", "React Native Testing Library", "Playwright", "Mocha & Chai", "Jasmine", "Postman"],
+  },
+  {
+    category: "Tools",
+    tools: ["Git", "Figma", "Xcode", "Android Studio", "VS Code", "Jira", "Confluence", "Trello", "Contento"],
+  },
 ] as const;

@@ -1,0 +1,15 @@
+/* A dark chapter "island": rounded on all corners, since light sections sit on
+   either side of it. */
+.sheet {
+  background: var(--ink);
+  border-radius: clamp(24px, 4vw, 48px);
+  color: var(--paper);
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Overrides the inline scale set from JS. */
+  .sheet {
+    transform: none !important;
+  }
+}
