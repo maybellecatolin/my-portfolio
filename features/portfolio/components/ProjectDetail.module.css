@@ -307,7 +307,7 @@
 
 .pager {
   display: grid;
-  margin-top: 96px;
+  margin-block: 96px;
 }
 
 .pagerLink {

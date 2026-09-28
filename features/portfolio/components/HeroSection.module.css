@@ -12,7 +12,9 @@
 
 .hero {
   display: grid;
+  isolation: isolate;
   margin: 0 auto;
+  position: relative;
   width: min(100% - 2 * var(--frame), var(--container));
 }
 
@@ -314,6 +316,64 @@
   }
 }
 
+/* ——— Ambient light: full-bleed, behind the content, drifting slowly ———
+   Extends up behind the (transparent) header and down into the next section,
+   fading out with a mask so there's no visible edge. */
+
+.ambient {
+  height: calc(100% + var(--header-h) + 40svh);
+  left: 50%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 62%, transparent 100%);
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: calc(-1 * var(--header-h));
+  transform: translateX(-50%);
+  width: 100vw;
+  z-index: -1;
+}
+
+.glowCoral,
+.glowSage {
+  border-radius: 50%;
+  filter: blur(80px);
+  position: absolute;
+}
+
+.glowCoral {
+  animation: drift-a 22s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(238, 104, 75, 0.28), transparent 70%);
+  height: min(60vw, 720px);
+  right: -8%;
+  top: -18%;
+  width: min(60vw, 720px);
+}
+
+.glowSage {
+  animation: drift-b 26s ease-in-out infinite alternate;
+  /* Deeper, more saturated sage than the palette's --sage so it reads on paper. */
+  background: radial-gradient(circle, rgba(118, 150, 112, 0.55), rgba(143, 168, 136, 0.22) 45%, transparent 70%);
+  /* Anchored from the top: the layer extends below the hero and fades out there,
+     so a bottom anchor would push this glow into the faded zone. */
+  height: min(80vw, 980px);
+  left: -18%;
+  top: 22%;
+  width: min(80vw, 980px);
+}
+
+@keyframes drift-a {
+  to {
+    transform: translate(-8vw, 10vh) scale(1.1);
+  }
+}
+
+@keyframes drift-b {
+  to {
+    transform: translate(10vw, -8vh) scale(1.08);
+  }
+}
+
 /* ——— Load-in: CSS (not JS) so it runs on first paint without waiting for hydration ——— */
 
 .meta,
@@ -351,6 +411,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .glowCoral,
+  .glowSage,
   .dot,
   .meta,
   .art,

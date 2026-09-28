@@ -1,4 +1,4 @@
-import { heroStats } from "@/features/portfolio/data";
+import { contact, heroStats } from "@/features/portfolio/data";
 
 import { HeroIllustration } from "./HeroIllustration";
 import styles from "./HeroSection.module.css";
@@ -6,6 +6,11 @@ import styles from "./HeroSection.module.css";
 export function HeroSection() {
   return (
     <section className={styles.hero} aria-labelledby="hero-heading">
+      {/* Soft coral and sage light drifting behind the hero (decorative). */}
+      <div className={styles.ambient} aria-hidden="true">
+        <span className={styles.glowCoral} />
+        <span className={styles.glowSage} />
+      </div>
       <div className={styles.main}>
         <div className={styles.meta}>
           <p className={styles.pill}>
@@ -45,7 +50,7 @@ export function HeroSection() {
             </a>
             <a
               className={styles.textLink}
-              href="mailto:catolinmaybelle@gmail.com?subject=CV%20request"
+              href={`mailto:${contact.email}?subject=CV%20request`}
             >
               Request CV <span aria-hidden="true">↗</span>
             </a>
