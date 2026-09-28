@@ -31,12 +31,12 @@ export const career = [
     role: "React Developer",
     period: "2022 — Present",
     current: true,
-    summary: "Securing digital identity onboarding across a React Native app and a React operator dashboard.",
+    summary:
+      "Developed and maintained a secure digital identity verification platform comprising a React Native mobile application and React web dashboard, supporting identity onboarding, KYC/IDV verification, compliance workflows, document processing, and administrative operations in the Isle of Man, Europe.",
     domains: ["Digital identity", "React Native", "React", "TypeScript"],
-    scope: ["Security architecture", "CI/CD ownership", "Store releases", "WCAG accessibility"],
+    scope: ["Web & mobile development", "Secure platforms", "Store releases", "WCAG accessibility"],
     projects: [
-      { name: "SQR", detail: "Mobile app · React Native", slug: "sqr" },
-      { name: "SQR", detail: "Admin dashboard · React", slug: "sqr" },
+      { name: "SQR", detail: "Mobile app and admin dashboard", slug: "sqr" },
     ],
   },
   {
@@ -54,7 +54,7 @@ export const career = [
     ],
   },
   {
-    company: "Stacktrek Enterprise",
+    company: "Stacktrek Enterprise Inc.",
     role: "Software Engineer · Team Lead",
     period: "2018 — 2021",
     current: false,
@@ -62,11 +62,8 @@ export const career = [
     domains: ["Sports tech", "Fintech", "Security", "Firebase"],
     scope: ["Team leadership", "Product delivery", "iOS + Android releases", "AWS deployment"],
     projects: [
-      { name: "FindiSport", detail: "Mobile app · React Native", slug: "findisport" },
-      { name: "FindiSport", detail: "Admin portal · React", slug: "findisport" },
-      { name: "FindiSport", detail: "Marketing website · WordPress", slug: "findisport" },
-      { name: "HK Roots", detail: "Mortgage platform · React", slug: "hk-roots" },
-      { name: "HK Roots", detail: "Mortgage calculator · React", slug: "hk-roots" },
+      { name: "FindiSport", detail: "Mobile app, admin portal and website", slug: "findisport" },
+      { name: "HK Roots", detail: "Mortgage platform and calculator", slug: "hk-roots" },
       { name: "Virtual Control", detail: "Video management · React", slug: "virtual-control" },
     ],
   },

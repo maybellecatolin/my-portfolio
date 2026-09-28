@@ -114,6 +114,17 @@ export function ProjectDetail({ project }: { project: Project }) {
                 )}
               </ul>
             )}
+            {project.link && (
+              <p className={styles.socials}>
+                <a className={styles.social} href={project.link.href} target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+                  </svg>
+                  {project.link.label} <span aria-hidden="true">↗</span>
+                </a>
+              </p>
+            )}
           </div>
         </section>
 
@@ -147,12 +158,6 @@ export function ProjectDetail({ project }: { project: Project }) {
                   </div>
                 ))}
               </dl>
-
-              {project.link && (
-                <a className={styles.visit} href={project.link.href} target="_blank" rel="noreferrer">
-                  {project.link.label} <span aria-hidden="true">↗</span>
-                </a>
-              )}
 
               <div className={styles.stackBlock}>
                 <h2 className={styles.asideTitle}>Tech stack</h2>
