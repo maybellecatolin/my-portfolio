@@ -227,10 +227,13 @@ export const projects: readonly Project[] = [
     timeline: "Jan 2022 – Apr 2022",
     location: "Philippines",
     cardStack: ["React", "Node.js"],
+    disclaimer:
+      "The product is covered by a non-disclosure agreement, so the screens shown here are illustrative mockups, not the actual product.",
     images: images("airline-insurance-ecommerce", [
-      ["Product landing page", "Airline insurance landing page"],
-      ["Eligibility & sign-up flow", "Airline insurance sign-up form"],
-      ["Fully responsive on mobile", "Airline insurance site on a phone"],
+      [
+        "Hero & KYC sign-up forms · illustrative mockup",
+        "Illustrative travel insurance website with a yellow hero section and traveller identity verification forms",
+      ],
     ]),
     parts: [
       {

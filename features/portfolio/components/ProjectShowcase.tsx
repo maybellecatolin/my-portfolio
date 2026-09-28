@@ -96,7 +96,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                       <circle cx="12" cy="12" r="9" />
                       <path d="M12 8v5M12 16h.01" />
                     </svg>
-                    Illustrative mockups · actual app under NDA
+                    Illustrative mockups · actual product under NDA
                   </p>
                 )}
                 <ul className={styles.stack} aria-label="Key technologies">
