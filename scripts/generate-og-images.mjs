@@ -1,14 +1,18 @@
 /**
  * Generates the 1200×630 social preview images in public/og/:
- *   home.jpg        – the home page
+ *   home.jpg        – a screenshot of the live hero section (stats row hidden)
  *   <slug>.jpg      – one per project, using its first carousel slide
  *
- * Run after changing a project's name, industry, tagline or first slide:
- *   npm run og
+ * Run after changing the hero, or a project's name, industry, tagline or first slide.
+ * The home image is captured from a running copy of the site, so start one first
+ * (a production server avoids the dev-mode badge):
+ *   npm run build && npm run start     # in one terminal
+ *   npm run og                          # in another
  *
- * Needs Google Chrome. Set CHROME_PATH if it isn't in the default macOS location.
+ * Needs Google Chrome. Set CHROME_PATH if it isn't in the default macOS location,
+ * and OG_SITE_URL if the site isn't running on http://localhost:3000.
  */
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -19,6 +23,8 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const OUT = path.join(ROOT, "public/og");
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), "og-"));
 const CHROME = process.env.CHROME_PATH ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const SITE = process.env.OG_SITE_URL ?? "http://localhost:3000";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Read the few fields we need straight from the TypeScript source (simple string literals),
 // so this script runs with plain Node and no TypeScript toolchain.
@@ -51,36 +57,6 @@ const baseCss = `
   .foot{position:absolute;left:64px;bottom:52px;font-size:17px;color:#4f5652;display:flex;gap:18px}
   .foot b{color:#1f2723}
 `;
-
-// Same layer positions as HeroIllustration.tsx (canvas 1174 × 735).
-const heroLayers = [
-  ["background", 0, 0, 1174],
-  ["laptop", 206, 177, 692],
-  ["coffee-mug", 868, 535, 213],
-  ["steam", 938, 434, 56],
-  ["dashboard", 47, 67, 376],
-  ["phone", 901, 54, 219],
-];
-
-const homeHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${baseCss}
-  .scene{position:absolute;right:40px;top:120px;width:560px;aspect-ratio:1174/735}
-  .scene img{position:absolute}
-  h1{position:absolute;left:64px;top:170px;width:560px;font-size:76px;line-height:.98;font-weight:400}
-  .role{position:absolute;left:64px;top:430px;font-size:22px;font-weight:600}
-</style></head><body>
-  <div class="glow" style="width:520px;height:520px;left:-160px;top:-220px;background:rgba(238,104,75,.22)"></div>
-  <div class="glow" style="width:560px;height:560px;right:-160px;bottom:-260px;background:rgba(169,184,164,.55)"></div>
-  <div class="brand"><img src="${logo}">Maybelle Catolin</div>
-  <h1 class="serif">Every vision <em>deserves great Software.</em></h1>
-  <p class="role">Senior Software Engineer · Frontend + Mobile</p>
-  <div class="scene">${heroLayers
-    .map(
-      ([name, x, y, width]) =>
-        `<img src="${fileUrl(path.join(ROOT, `public/hero/${name}.png`))}" style="left:${(x / 1174) * 100}%;top:${(y / 735) * 100}%;width:${(width / 1174) * 100}%">`,
-    )
-    .join("")}</div>
-  <div class="foot"><b>React · React Native · TypeScript</b><span>Open to new roles · Remote</span></div>
-</body></html>`;
 
 const projectHtml = (project, slide) => `<!doctype html><html><head><meta charset="utf-8"><style>${baseCss}
   .text{position:absolute;left:64px;top:150px;width:470px}
@@ -123,8 +99,75 @@ async function render(name, html) {
   console.log(`${name.padEnd(30)} ${out.width}x${out.height}  ${Math.round(out.size / 1024)} KB`);
 }
 
+/** Screenshots the hero of the running site at 1200×630 (rendered at 2× for sharpness). */
+async function captureHome() {
+  try {
+    await fetch(SITE);
+  } catch {
+    console.warn(`home: skipped, nothing is running at ${SITE} (see the note at the top of this file)`);
+    return;
+  }
+  const port = 9339;
+  const chrome = spawn(
+    CHROME,
+    ["--headless=new", "--hide-scrollbars", `--remote-debugging-port=${port}`, `--user-data-dir=${path.join(TMP, "chrome")}`, "about:blank"],
+    { stdio: "ignore" },
+  );
+  try {
+    let target;
+    for (let attempt = 0; attempt < 50 && !target; attempt++) {
+      try {
+        target = await (await fetch(`http://127.0.0.1:${port}/json/new?about:blank`, { method: "PUT" })).json();
+      } catch {
+        await sleep(200);
+      }
+    }
+    if (!target) throw new Error("Chrome didn't start");
+
+    const socket = new WebSocket(target.webSocketDebuggerUrl);
+    await new Promise((resolve, reject) => {
+      socket.onopen = resolve;
+      socket.onerror = reject;
+    });
+    let nextId = 0;
+    const pending = new Map();
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      pending.get(message.id)?.(message.result);
+      pending.delete(message.id);
+    };
+    const send = (method, params = {}) =>
+      new Promise((resolve) => {
+        const id = ++nextId;
+        pending.set(id, resolve);
+        socket.send(JSON.stringify({ id, method, params }));
+      });
+
+    await send("Emulation.setDeviceMetricsOverride", { width: 1200, height: 630, deviceScaleFactor: 2, mobile: false });
+    // Settle straight into the final state rather than mid-animation.
+    await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+    await send("Page.navigate", { url: SITE });
+    await sleep(3500);
+    // The stats row would be cut off at the bottom edge; the dev-mode badge isn't part of the site.
+    await send("Runtime.evaluate", {
+      expression: `document.head.insertAdjacentHTML("beforeend", "<style>ul[aria-label='Career highlights'], nextjs-portal { display: none !important; }</style>")`,
+    });
+    await sleep(500);
+    const { data } = await send("Page.captureScreenshot", { format: "png" });
+    socket.close();
+
+    const out = await sharp(Buffer.from(data, "base64"))
+      .resize(1200, 630)
+      .jpeg({ quality: 88, mozjpeg: true })
+      .toFile(path.join(OUT, "home.jpg"));
+    console.log(`${"home".padEnd(30)} ${out.width}x${out.height}  ${Math.round(out.size / 1024)} KB  (from ${SITE})`);
+  } finally {
+    chrome.kill();
+  }
+}
+
 fs.mkdirSync(OUT, { recursive: true });
-await render("home", homeHtml);
+await captureHome();
 for (const project of projects) {
   // Hand Chrome a PNG copy of the WebP slide for reliable decoding in a screenshot pass.
   const slide = path.join(TMP, `${project.slug}-slide.png`);

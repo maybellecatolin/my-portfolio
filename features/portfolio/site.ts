@@ -29,7 +29,7 @@ export const site = {
   jobTitle: "Senior Software Engineer",
   title: "Maybelle Catolin | Senior Software Engineer, Frontend + Mobile",
   description:
-    "Senior software engineer building secure, accessible web and mobile products with React, React Native and TypeScript, from digital identity and banking to insurance and sports tech.",
+    "Senior Software Engineer with 8+ years of experience designing and building enterprise web and mobile applications across digital identity, financial services, banking, insurance, security, and sports technology.",
   keywords: [
     "Maybelle Catolin",
     "Senior Software Engineer",

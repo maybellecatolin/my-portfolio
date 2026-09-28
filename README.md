@@ -31,7 +31,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run build` | Create the production build (type-checks and prerenders every page) |
 | `npm run start` | Serve the production build                                          |
 | `npm run lint`  | Run ESLint                                                          |
-| `npm run og`    | Regenerate the social preview images in `public/og/` (needs Chrome) |
+| `npm run og`    | Regenerate the social preview images in `public/og/` (needs Chrome and the site running, see below) |
 
 ## Project structure
 
@@ -67,7 +67,11 @@ Components are server components by default. Only the pieces that need the brows
   - `summary` (Work list) and `tagline` (case study subtitle)
   - `images`: files in `public/projects/<slug>/`, numbered from `01.webp`. Use `fit: "contain"` (and optionally `background`) for portrait phone screens.
   - Optional `link` (website), `stores` (App Store / Google Play badges), `socials` (Instagram / Facebook) and `disclaimer` (shown for work under NDA, on the case study and in the Work list).
-- **After changing a project's name, industry, tagline or first slide**, run `npm run og` so its social preview matches.
+- **After changing the hero, or a project's name, industry, tagline or first slide**, regenerate the social previews. The home preview is a screenshot of the live hero, so start the site first:
+  ```bash
+  npm run build && npm run start   # terminal 1
+  npm run og                       # terminal 2
+  ```
 - **Replacing an image with the same file name while `npm run dev` is running**: delete `.next/cache/images`, then hard-refresh, or you'll keep seeing the cached version.
 
 Screens for projects under NDA are illustrative mockups, labelled as such on the image, in the caption and in a disclaimer.
@@ -75,7 +79,7 @@ Screens for projects under NDA are illustrative mockups, labelled as such on the
 ## SEO and sharing
 
 - Titles use a template (`<page> | Maybelle Catolin`), with a unique description and canonical URL per page.
-- Open Graph and Twitter card tags on every page, with a 1200×630 preview image per page.
+- Open Graph and Twitter card tags on every page, with a 1200×630 preview image per page (the home page uses a screenshot of the hero).
 - JSON-LD structured data: `WebSite` and `Person` on the home page, `CreativeWork` and `BreadcrumbList` on each case study.
 - `sitemap.xml` (with image entries) and `robots.txt` are generated at build time.
 - The 404 page is excluded from indexing.
