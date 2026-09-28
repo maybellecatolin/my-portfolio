@@ -334,17 +334,17 @@
   align-items: center;
   display: flex;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 30px;
+  font-size: 22px;
   justify-content: space-between;
-  letter-spacing: -0.03em;
-  min-height: 72px;
+  letter-spacing: -0.02em;
+  min-height: 56px;
   transition: color 0.2s ease;
 }
 
 .menuArrow {
   color: var(--coral-strong);
   font-family: "Avenir Next", "Helvetica Neue", sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   transition: transform 0.2s ease;
 }
 
