@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { projects, type Project } from "@/features/portfolio/projects";
@@ -60,6 +61,24 @@ export function ProjectDetail({ project }: { project: Project }) {
           <div className={styles.overviewBlock}>
             <h2 className={styles.sectionTitle}>Overview</h2>
             <p className={styles.overview}>{project.overview}</p>
+            {project.stores && (
+              <ul className={styles.stores} aria-label="Download the app">
+                {project.stores.appStore && (
+                  <li>
+                    <a className={styles.store} href={project.stores.appStore} target="_blank" rel="noreferrer">
+                      <Image src="/badges/app-store.svg" alt="Download on the App Store" width={120} height={40} />
+                    </a>
+                  </li>
+                )}
+                {project.stores.googlePlay && (
+                  <li>
+                    <a className={styles.store} href={project.stores.googlePlay} target="_blank" rel="noreferrer">
+                      <Image src="/badges/google-play.png" alt="Get it on Google Play" width={134} height={40} />
+                    </a>
+                  </li>
+                )}
+              </ul>
+            )}
           </div>
         </section>
 

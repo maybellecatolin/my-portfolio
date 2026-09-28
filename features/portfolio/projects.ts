@@ -9,6 +9,10 @@ export type ProjectImage = {
   src: string;
   alt: string;
   caption: string;
+  /** "contain" shows the whole image (e.g. portrait phone screens); defaults to "cover". */
+  fit?: "cover" | "contain";
+  /** CSS background around a contained image; defaults to a blurred copy of the image. */
+  background?: string;
 };
 
 export type ProjectPart = {
@@ -32,6 +36,8 @@ export type Project = {
   timeline: string;
   location?: string;
   link?: { href: string; label: string };
+  /** Store listings, shown as badges under the case-study overview. */
+  stores?: { appStore?: string; googlePlay?: string };
   /** Short stack shown on the card. */
   cardStack: readonly string[];
   images: readonly ProjectImage[];
@@ -49,8 +55,10 @@ export const projects: readonly Project[] = [
   {
     slug: "sqr",
     name: "SQR",
-    summary: "Digital identity verification across a secure mobile app and an operator dashboard.",
-    tagline: "Secure identity verification, from phone camera to compliance desk.",
+    summary:
+      "Reusable digital identity verification, electronic Know Your Customer (eKYC), and Anti-Money Laundering (AML) compliance",
+    tagline:
+      "Reusable digital identity verification, electronic Know Your Customer (eKYC), and Anti-Money Laundering (AML) compliance",
     overview:
       "SQR is a digital identity platform for the Isle of Man. People verify who they are in a React Native app, covering onboarding, KYC/IDV, biometric liveness and document capture, while operators review cases and run compliance workflows in a React admin dashboard. I work across both, from native SDK integration and device security to release management and dashboard architecture.",
     industry: "Digital identity · RegTech",
@@ -59,12 +67,24 @@ export const projects: readonly Project[] = [
     role: "React & React Native Developer",
     timeline: "Nov 2022 – Present",
     location: "Isle of Man, Europe",
+    stores: {
+      appStore: "https://apps.apple.com/us/app/sqr/id6446169262",
+      googlePlay: "https://play.google.com/store/apps/details?id=com.secureqr&hl=en",
+    },
     cardStack: ["React Native", "React", "TypeScript"],
+    // Portrait phone screens (02–05) are shown whole rather than cropped to 16:10,
+    // on their own mint edge colour.
     images: images("sqr", [
-      ["Identity onboarding", "SQR mobile app onboarding screens"],
-      ["Biometric liveness & document capture", "SQR mobile liveness and document capture flow"],
-      ["Operator admin dashboard", "SQR web admin dashboard"],
-    ]),
+      ["Mobile app & operator dashboard", "SQR admin dashboard on desktop and laptops alongside the SQR mobile app"],
+      ["Onboarding", "SQR onboarding screen: making the world a safer place through digital identity verification"],
+      ["Digital ID & QR sharing", "SQR digital ID with a QR code for sharing verified identity"],
+      ["Biometric face scan", "SQR facial recognition liveness scan"],
+      ["Document capture", "SQR identity document scan with blur detection"],
+    ]).map((image, index) =>
+      index === 0
+        ? image
+        : { ...image, fit: "contain" as const, background: "linear-gradient(180deg, #f1ffe2, #e5fdd9)" },
+    ),
     parts: [
       {
         name: "Mobile app · React Native",

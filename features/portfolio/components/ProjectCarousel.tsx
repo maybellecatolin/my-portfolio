@@ -1,12 +1,15 @@
 "use client";
 
+import { useReducedMotion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import type { ProjectImage } from "@/features/portfolio/projects";
 
 import styles from "./ProjectCarousel.module.css";
+
+const AUTO_PLAY_MS = 4000;
 
 type ProjectCarouselProps = {
   images: readonly ProjectImage[];
@@ -17,17 +20,50 @@ type ProjectCarouselProps = {
   sizes: string;
   preload?: boolean;
   showCaption?: boolean;
+  /** Advance slides automatically. Pauses on hover/focus, off-screen, and with reduced motion. */
+  autoPlay?: boolean;
 };
 
 /**
  * Lightweight image carousel on native CSS scroll-snap: touch/trackpad swipe,
- * arrow buttons and dots, with wrap-around. No third-party dependency.
+ * arrow buttons and dots, with wrap-around and autoplay. No third-party dependency.
  */
-export function ProjectCarousel({ images, label, href, sizes, preload = false, showCaption = false }: ProjectCarouselProps) {
+export function ProjectCarousel({
+  images,
+  label,
+  href,
+  sizes,
+  preload = false,
+  showCaption = false,
+  autoPlay = true,
+}: ProjectCarouselProps) {
   const trackId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const reducedMotion = useReducedMotion();
   const count = images.length;
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.5 });
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, []);
+
+  // Depends on `index`, so the timer restarts after any manual navigation.
+  useEffect(() => {
+    if (!autoPlay || hovered || focused || !visible || reducedMotion || count < 2) return;
+    const timer = window.setTimeout(() => {
+      const track = trackRef.current;
+      if (track) track.scrollTo({ left: ((index + 1) % count) * track.clientWidth });
+    }, AUTO_PLAY_MS);
+    return () => window.clearTimeout(timer);
+  }, [autoPlay, hovered, focused, visible, reducedMotion, count, index]);
 
   // Smooth vs instant scrolling comes from CSS, so reduced-motion is respected.
   const goTo = (target: number) => {
@@ -42,19 +78,38 @@ export function ProjectCarousel({ images, label, href, sizes, preload = false, s
   };
 
   return (
-    <div className={styles.root} role="region" aria-roledescription="carousel" aria-label={`${label} screenshots`}>
+    <div
+      className={styles.root}
+      ref={rootRef}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={`${label} screenshots`}
+      onPointerEnter={(event) => event.pointerType === "mouse" && setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={() => setFocused(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false);
+      }}
+    >
       <div className={styles.frame}>
         <div className={styles.track} id={trackId} ref={trackRef} onScroll={onScroll}>
           {images.map((image, slideIndex) => {
+            const contain = image.fit === "contain";
             const picture = (
-              <Image
-                className={styles.image}
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes={sizes}
-                preload={preload && slideIndex === 0}
-              />
+              <>
+                {contain && !image.background && (
+                  // Blurred copy fills the letterbox around a contained (e.g. portrait) image.
+                  <Image className={styles.backdrop} src={image.src} alt="" aria-hidden="true" fill sizes="64px" />
+                )}
+                <Image
+                  className={contain ? `${styles.image} ${styles.contain}` : styles.image}
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes={sizes}
+                  preload={preload && slideIndex === 0}
+                />
+              </>
             );
             return (
               <div
@@ -63,6 +118,7 @@ export function ProjectCarousel({ images, label, href, sizes, preload = false, s
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${slideIndex + 1} of ${count}: ${image.caption}`}
+                style={image.background ? { background: image.background } : undefined}
               >
                 {href ? (
                   // The card title is the accessible link; slide links are pointer/touch shortcuts.

@@ -128,6 +128,7 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                     href={`/projects/${project.slug}`}
                     sizes="(min-width: 1280px) 680px, 55vw"
                     preload={index === 0}
+                    autoPlay={isActive}
                   />
                 </motion.div>
               );
