@@ -3,6 +3,8 @@
  *
  * Images live in public/projects/<slug>/. To use real screenshots, replace the
  * files (keep the names) or edit `images` below; 16:10 landscape works best.
+ * After replacing a file in place during `npm run dev`, delete .next/cache/images
+ * so Next serves the new version instead of its cached optimised copy.
  */
 
 export type ProjectImage = {
@@ -326,9 +328,14 @@ export const projects: readonly Project[] = [
     link: { href: "https://hkroots.io", label: "Visit hkroots.io" },
     cardStack: ["React", "Node.js", "MongoDB"],
     images: images("hk-roots", [
-      ["Mortgage application", "HK Roots mortgage application"],
-      ["Affordability calculator", "HK Roots mortgage calculator"],
-      ["Property recommendations", "HK Roots property recommendations"],
+      [
+        "Mortgage application & bank offers · illustrative mockup",
+        "Illustrative HK Roots mortgage application with matched bank offers and generated bank forms",
+      ],
+      [
+        "Affordability calculator & property matches · illustrative mockup",
+        "Illustrative HK Roots affordability calculator beside recommended properties within budget",
+      ],
     ]),
     parts: [
       {
@@ -364,9 +371,14 @@ export const projects: readonly Project[] = [
     timeline: "May 2018 – Sep 2018",
     cardStack: ["React", "Node.js", "AWS Kinesis"],
     images: images("virtual-control", [
-      ["Live facility monitoring", "Virtual Control live video monitoring"],
-      ["Interactive facility map", "Virtual Control facility map"],
-      ["Alerts & reports", "Virtual Control alerts and reports"],
+      [
+        "Live facility monitoring · illustrative mockup",
+        "Illustrative Virtual Control live camera wall with detection and alerts",
+      ],
+      [
+        "Facility map, alerts & reports · illustrative mockup",
+        "Illustrative Virtual Control facility map with site status, alerts and a downloadable report",
+      ],
     ]),
     parts: [
       {
