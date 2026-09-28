@@ -7,9 +7,9 @@ export function SiteFooter() {
       <footer className="site-footer section-wrap" id="contact">
         <SectionKicker>Start a conversation</SectionKicker>
         <h2>
-          Have a hard problem
+          Let&apos;s build
           <br />
-          <em>worth solving?</em>
+          <em>what&apos;s next.</em>
         </h2>
         <a className="footer-email" href={`mailto:${contact.email}`}>
           {contact.email} <span aria-hidden="true">↗</span>
