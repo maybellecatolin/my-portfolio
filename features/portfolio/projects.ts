@@ -193,10 +193,11 @@ export const projects: readonly Project[] = [
     timeline: "Apr 2022 – Nov 2022",
     location: "Philippines",
     cardStack: ["React Native", "Node.js", "OpenShift"],
+    disclaimer:
+      "The app is covered by a non-disclosure agreement, so the screens shown here are illustrative mockups, not the actual app.",
     images: images("insurance-app", [
-      ["Policy overview", "Insurance app policy overview screen"],
-      ["Claims & requests", "Insurance app claims flow"],
-      ["New feature enhancements", "Insurance app feature screens"],
+      ["Find a doctor · illustrative mockup", "Illustrative insurance app screen listing accredited doctors by specialization"],
+      ["Locate clinics · illustrative mockup", "Illustrative insurance app map screen for locating nearby accredited clinics"],
     ]),
     parts: [
       {
