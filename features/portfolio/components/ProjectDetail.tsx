@@ -61,6 +61,15 @@ export function ProjectDetail({ project }: { project: Project }) {
           <div className={styles.overviewBlock}>
             <h2 className={styles.sectionTitle}>Overview</h2>
             <p className={styles.overview}>{project.overview}</p>
+            {project.disclaimer && (
+              <p className={styles.disclaimer}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 8v5M12 16h.01" />
+                </svg>
+                {project.disclaimer}
+              </p>
+            )}
             {project.stores && (
               <ul className={styles.stores} aria-label="Download the app">
                 {project.stores.appStore && (

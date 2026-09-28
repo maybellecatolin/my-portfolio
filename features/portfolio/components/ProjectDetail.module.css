@@ -126,6 +126,32 @@
   max-width: 60ch;
 }
 
+.disclaimer {
+  align-items: flex-start;
+  background: var(--paper-deep);
+  border-radius: 10px;
+  color: #4f5652;
+  display: flex;
+  font-size: 13px;
+  gap: 10px;
+  line-height: 1.55;
+  margin: 18px 0 0;
+  max-width: 60ch;
+  padding: 12px 14px;
+}
+
+.disclaimer svg {
+  fill: none;
+  flex-shrink: 0;
+  height: 16px;
+  margin-top: 2px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 16px;
+}
+
 /* Load-in: CSS so it runs on first paint. */
 .intro,
 .media,

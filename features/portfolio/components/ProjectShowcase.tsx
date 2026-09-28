@@ -90,6 +90,15 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
                   </Link>
                 </h3>
                 <p className={styles.summary}>{project.summary}</p>
+                {project.disclaimer && (
+                  <p className={styles.disclaimer}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M12 8v5M12 16h.01" />
+                    </svg>
+                    Illustrative mockups · actual app under NDA
+                  </p>
+                )}
                 <ul className={styles.stack} aria-label="Key technologies">
                   {project.cardStack.map((tech) => (
                     <li key={tech}>{tech}</li>

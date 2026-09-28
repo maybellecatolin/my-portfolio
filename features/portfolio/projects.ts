@@ -36,6 +36,8 @@ export type Project = {
   timeline: string;
   location?: string;
   link?: { href: string; label: string };
+  /** Note shown under the case-study overview, e.g. when screens are mockups under NDA. */
+  disclaimer?: string;
   /** Store listings, shown as badges under the case-study overview. */
   stores?: { appStore?: string; googlePlay?: string };
   /** Short stack shown on the card. */
@@ -154,10 +156,14 @@ export const projects: readonly Project[] = [
     timeline: "Jul 2021 – Dec 2021",
     location: "Philippines",
     cardStack: ["React Native", "Jest"],
+    disclaimer:
+      "The app is covered by a non-disclosure agreement, so the screens shown here are illustrative mockups, not the actual app.",
+    // Slides 02–04 are illustrative mockups (see `disclaimer`), not the client's app.
     images: images("mobile-banking", [
-      ["Account overview", "Mobile banking account overview screen"],
-      ["Transfers & payments", "Mobile banking transfer flow"],
-      ["Transaction history", "Mobile banking transaction history"],
+      ["Culture Champ: Team Excellence award", "Yondu Certificate of Appreciation awarded to Maybelle Catolin for teamwork and collaboration"],
+      ["Accounts home · illustrative mockup", "Illustrative mobile banking home screen with savings accounts and credit cards"],
+      ["Send money · illustrative mockup", "Illustrative mobile banking send money screen"],
+      ["Pay bills · illustrative mockup", "Illustrative mobile banking pay bills screen with biller categories"],
     ]),
     parts: [
       {

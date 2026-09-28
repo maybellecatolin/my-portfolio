@@ -83,6 +83,26 @@
   max-width: 46ch;
 }
 
+.disclaimer {
+  align-items: center;
+  color: #4f5652;
+  display: flex;
+  font-size: 12.5px;
+  gap: 7px;
+  margin: -6px 0 16px;
+}
+
+.disclaimer svg {
+  fill: none;
+  flex-shrink: 0;
+  height: 14px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 14px;
+}
+
 .stack {
   display: flex;
   flex-wrap: wrap;
