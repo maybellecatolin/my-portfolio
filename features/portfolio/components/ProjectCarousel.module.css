@@ -60,7 +60,8 @@
   transform: scale(1.05);
 }
 
-/* ——— Arrows: revealed on hover/focus with a pointer, always shown on touch ——— */
+/* ——— Arrows: desktop only, revealed on hover or keyboard focus. Phones, tablets
+   and touch screens don't show them; there you swipe or use the dots. ——— */
 
 .arrow {
   opacity: 0;
@@ -74,9 +75,10 @@
   opacity: 1;
 }
 
-@media (hover: none) {
-  .arrow {
-    opacity: 1;
+@media (max-width: 1023px), (hover: none) {
+  /* .frame prefix: must outrank the .arrow layout rule further down. */
+  .frame .arrow {
+    display: none;
   }
 }
 
