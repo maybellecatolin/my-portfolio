@@ -25,13 +25,28 @@
   max-width: 52ch;
 }
 
+/* Tablet and desktop: spacing and heading size also follow the screen's height, so
+   the heading and the first project fit on one screen when "Work" is clicked. */
+@media (min-width: 768px) {
+  .heading {
+    margin-bottom: clamp(28px, 6svh, 72px);
+  }
+
+  .headingTitle {
+    font-size: clamp(42px, min(5.4vw, 8svh), 76px);
+  }
+
+  .headingIntro {
+    margin-top: clamp(12px, 2.5svh, 24px);
+  }
+}
+
 @media (min-width: 1024px) {
   /* Kicker in the left column; heading + intro share the wide right column. */
   .heading {
     column-gap: 32px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-    margin-bottom: 72px;
   }
 
   .headingTitle,

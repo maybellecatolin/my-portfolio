@@ -48,6 +48,8 @@
 }
 
 .card {
+  /* Lines shown before a card is expanded (fewer on short laptop screens). */
+  --quote-lines: 7;
   background: #2a3430;
   border: 1px solid var(--line-on-ink);
   border-radius: 16px;
@@ -178,8 +180,15 @@
 }
 
 @media (min-width: 1024px) {
+  /* One screen below the header, content centred, with spacing and heading size
+     that follow the screen's height: clicking "Recommendations" shows the heading
+     and all three cards uncut. The sheet runs one corner-radius past the bottom of
+     the screen, so its rounded bottom stays just out of view there and appears as
+     you scroll on to Experience; the extra bottom padding keeps the content
+     centred in the visible part. */
   .section {
-    padding-block: 128px;
+    min-height: calc(100svh - var(--header-h) + var(--sheet-radius));
+    padding-block: clamp(40px, 7svh, 128px) calc(clamp(40px, 7svh, 128px) + var(--sheet-radius));
   }
 
   /* Kicker left, heading in the wide right column (matches the other sections). */
@@ -187,10 +196,11 @@
     column-gap: 32px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
-    margin-bottom: 64px;
+    margin-bottom: clamp(24px, 5svh, 64px);
   }
 
   .headingTitle {
+    font-size: clamp(42px, min(5vw, 8svh), 72px);
     grid-column: 2;
     margin-top: 0;
   }
@@ -198,6 +208,12 @@
   .grid {
     gap: 24px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 820px) {
+  .card {
+    --quote-lines: 5;
   }
 }
 
@@ -220,13 +236,13 @@
   .card[data-expanded="false"] .quote {
     -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
     mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
-    max-height: calc(17px * 1.6 * 7);
+    max-height: calc(17px * 1.6 * var(--quote-lines));
     overflow: hidden;
   }
 }
 
 /* Clamp + hover-to-expand only where hover exists (desktop with a pointer). The
-   whole quote is cut at 7 lines (17px × 1.6), so it works across paragraphs, and
+   whole quote is cut at --quote-lines lines (17px × 1.6), so it works across paragraphs, and
    the last line fades out. */
 @media (min-width: 1024px) and (hover: hover) {
   /* Stretched link: the whole card opens LinkedIn. */
@@ -250,7 +266,7 @@
   .quote {
     -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
     mask-image: linear-gradient(to bottom, #000 calc(100% - 1.6em), transparent);
-    max-height: calc(17px * 1.6 * 7);
+    max-height: calc(17px * 1.6 * var(--quote-lines));
     overflow: hidden;
   }
 

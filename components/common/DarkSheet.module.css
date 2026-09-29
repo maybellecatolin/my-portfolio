@@ -2,7 +2,7 @@
    either side of it. */
 .sheet {
   background: var(--ink);
-  border-radius: clamp(24px, 4vw, 48px);
+  border-radius: var(--sheet-radius);
   color: var(--paper);
   transform-origin: top center;
 }

@@ -1,7 +1,10 @@
 /* Contact: heading and email on the left, a contact card on the right (stacked on phones). */
 
 .layout {
+  /* Fills the footer's spare height and centres the content in it. */
+  align-content: center;
   display: grid;
+  flex: 1;
   gap: 48px;
 }
 

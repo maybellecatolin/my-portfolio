@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { navItems, sectionIds } from "@/features/portfolio/data";
 import { useActiveSection } from "@/features/portfolio/hooks/useActiveSection";
+import { scrollToSection } from "@/features/portfolio/scrollToSection";
 
 import styles from "./SiteHeader.module.css";
 
@@ -19,6 +20,7 @@ export function HeaderNav() {
           href={`/#${item.id}`}
           key={item.id}
           aria-current={item.id === active ? "true" : undefined}
+          onClick={(event) => scrollToSection(event, item.id)}
           data-track="nav_click"
           data-track-section={item.id}
           data-track-location="header"
