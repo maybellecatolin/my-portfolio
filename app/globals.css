@@ -116,6 +116,13 @@ h2 em {
   padding-bottom: 150px;
   padding-top: 140px;
 }
+/* Its top padding (140px / 90px) is taller than the header, so the "Work" link can
+   scroll the section's top edge right to the top: the header covers only that empty
+   padding, and the hero's stats row above is fully out of view instead of peeking
+   around the floating header. */
+.work-section[id] {
+  scroll-margin-top: 0;
+}
 .section-kicker {
   color: var(--coral);
   font-weight: 700;
