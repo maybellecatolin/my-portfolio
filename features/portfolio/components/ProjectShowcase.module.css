@@ -230,6 +230,10 @@
   /* Pinned just below the header at its natural height, so it stays in place
      through the last project and starts level with the first one. */
   .panelInner {
+    /* On very short screens, narrow the panel so its 16:10 image still fits
+       below the header instead of running off the bottom. */
+    margin-left: auto;
+    max-width: calc((100svh - var(--header-h) - clamp(24px, 8svh, 96px) - 24px) * 1.6);
     position: sticky;
     top: calc(var(--header-h) + clamp(24px, 8svh, 96px));
   }

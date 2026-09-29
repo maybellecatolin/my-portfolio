@@ -17,6 +17,8 @@
   --frame: 0px;
   --gutter: 20px;
   --header-h: 68px;
+  /* Corner radius of the dark "sheet" chapters (DarkSheet). */
+  --sheet-radius: clamp(24px, 4vw, 48px);
 }
 @media (min-width: 600px) {
   :root {
@@ -123,6 +125,14 @@ h2 em {
 .work-section[id] {
   scroll-margin-top: 0;
 }
+/* Tablet and desktop: the top padding is the header plus a gap that shrinks on
+   short screens, so the heading and the whole first project fit in one screen
+   after clicking "Work". */
+@media (min-width: 768px) {
+  .work-section {
+    padding-top: calc(var(--header-h) + clamp(16px, 4svh, 56px));
+  }
+}
 .section-kicker {
   color: var(--coral);
   font-weight: 700;
@@ -140,9 +150,16 @@ h2 em {
     radial-gradient(55% 65% at 8% 92%, rgba(169, 184, 164, 0.38), transparent 70%),
     var(--paper);
 }
+/* At least one screen below the header, so the "Contact" link can scroll it to just
+   under the header (it's the last section; shorter, the page would stop early).
+   The Toolkit sheet's dark edge stays visible behind the header. Content is centred
+   in the space. */
 .site-footer {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header-h));
   padding-bottom: 42px;
-  padding-top: 125px;
+  padding-top: clamp(48px, 9svh, 125px);
 }
 .site-footer h2 {
   margin: 60px 0 42px;
@@ -154,16 +171,13 @@ h2 em {
   font-size: 10px;
   justify-content: space-between;
   letter-spacing: 0.08em;
-  margin-top: 130px;
+  margin-top: clamp(40px, 8svh, 130px);
   padding-top: 20px;
   text-transform: uppercase;
 }
 @media (max-width: 800px) {
   .work-section {
     padding-bottom: 90px;
-    padding-top: 90px;
-  }
-  .site-footer {
     padding-top: 90px;
   }
   .site-footer h2 {
