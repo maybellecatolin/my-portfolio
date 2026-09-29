@@ -19,11 +19,16 @@ const DESKTOP_QUERY = "(min-width: 1024px)";
  */
 export function MobileMenu() {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const activeSection = useActiveSection(sectionIds);
 
   const open = () => {
     dialogRef.current?.showModal();
+    // showModal() focuses the first link (the wordmark), and some mobile browsers then
+    // draw its focus ring even for a tap. Focusing the panel instead keeps the menu
+    // announced for screen readers; Tab still reaches every link with a visible ring.
+    panelRef.current?.focus();
     setIsOpen(true);
   };
   const close = () => dialogRef.current?.close();
@@ -63,7 +68,7 @@ export function MobileMenu() {
           if (event.target === event.currentTarget) close();
         }}
       >
-        <div className={styles.panel}>
+        <div className={styles.panel} ref={panelRef} tabIndex={-1}>
           <div className={styles.panelHead}>
             <Wordmark onClick={close} />
             <button type="button" className={styles.close} aria-label="Close menu" onClick={close}>

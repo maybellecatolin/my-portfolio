@@ -140,23 +140,6 @@ h2 em {
 .site-footer h2 {
   margin: 60px 0 42px;
 }
-.footer-email {
-  border-bottom: 1px solid currentColor;
-  transition: color 0.2s ease;
-  display: inline-block;
-  font:
-    24px Georgia,
-    serif;
-  padding-bottom: 8px;
-}
-.footer-email span {
-  color: var(--coral);
-  font-family: "Avenir Next", sans-serif;
-  margin-left: 18px;
-}
-.footer-email:hover {
-  color: var(--coral-strong);
-}
 .footer-meta {
   border-top: 1px solid var(--line);
   color: #4f5652;
@@ -183,10 +166,5 @@ h2 em {
     flex-wrap: wrap;
     gap: 15px;
     margin-top: 90px;
-  }
-}
-@media (max-width: 450px) {
-  .footer-email {
-    font-size: 18px;
   }
 }

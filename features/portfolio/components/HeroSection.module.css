@@ -334,16 +334,25 @@
   z-index: -1;
 }
 
+/* Soft edges come from the gradients themselves, not filter: blur(). A large
+   blurred layer drifting inside a masked parent has to be re-rasterised on every
+   frame, which flickers on mobile browsers while scrolling. (No 3D transforms or
+   backface-visibility here: in iOS Safari those can paint over the sticky header.) */
 .glowCoral,
 .glowSage {
   border-radius: 50%;
-  filter: blur(80px);
   position: absolute;
 }
 
 .glowCoral {
   animation: drift-a 22s ease-in-out infinite alternate;
-  background: radial-gradient(circle, rgba(238, 104, 75, 0.28), transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(238, 104, 75, 0.26) 0%,
+    rgba(238, 104, 75, 0.16) 30%,
+    rgba(238, 104, 75, 0.06) 52%,
+    transparent 72%
+  );
   height: min(60vw, 720px);
   right: -8%;
   top: -18%;
@@ -353,7 +362,14 @@
 .glowSage {
   animation: drift-b 26s ease-in-out infinite alternate;
   /* Deeper, more saturated sage than the palette's --sage so it reads on paper. */
-  background: radial-gradient(circle, rgba(118, 150, 112, 0.55), rgba(143, 168, 136, 0.22) 45%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(118, 150, 112, 0.46) 0%,
+    rgba(130, 160, 124, 0.3) 25%,
+    rgba(143, 168, 136, 0.14) 48%,
+    rgba(143, 168, 136, 0.04) 62%,
+    transparent 72%
+  );
   /* Anchored from the top: the layer extends below the hero and fades out there,
      so a bottom anchor would push this glow into the faded zone. */
   height: min(80vw, 980px);
@@ -362,15 +378,17 @@
   width: min(80vw, 980px);
 }
 
+/* Percentages (of the glow's own size) rather than vw/vh, so the motion doesn't
+   jump when a mobile browser's toolbar shows or hides while scrolling. */
 @keyframes drift-a {
   to {
-    transform: translate(-8vw, 10vh) scale(1.1);
+    transform: translate(-14%, 16%) scale(1.1);
   }
 }
 
 @keyframes drift-b {
   to {
-    transform: translate(10vw, -8vh) scale(1.08);
+    transform: translate(12%, -10%) scale(1.08);
   }
 }
 
