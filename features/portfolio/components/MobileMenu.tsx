@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { contact, navItems, sectionIds } from "@/features/portfolio/data";
 import { useActiveSection } from "@/features/portfolio/hooks/useActiveSection";
+import { scrollToSection } from "@/features/portfolio/scrollToSection";
 
 import styles from "./SiteHeader.module.css";
 import { Wordmark } from "./Wordmark";
@@ -83,7 +84,10 @@ export function MobileMenu() {
                   <Link
                     className={styles.menuLink}
                     href={`/#${item.id}`}
-                    onClick={close}
+                    onClick={(event) => {
+                      close();
+                      scrollToSection(event, item.id);
+                    }}
                     aria-current={item.id === activeSection ? "true" : undefined}
                     data-track="nav_click"
                     data-track-section={item.id}

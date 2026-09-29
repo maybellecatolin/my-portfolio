@@ -2,11 +2,12 @@
 
 import * as m from "motion/react-m";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { revealEase } from "@/components/common/motion";
 import { useActiveIndex } from "@/features/portfolio/hooks/useActiveIndex";
 import type { Project } from "@/features/portfolio/projects";
+import { SECTION_JUMP_EVENT } from "@/features/portfolio/scrollToSection";
 
 import { ProjectCarousel } from "./ProjectCarousel";
 import styles from "./ProjectShowcase.module.css";
@@ -35,6 +36,23 @@ export function ProjectShowcase({ projects }: { projects: readonly Project[] }) 
   // - otherwise, the project crossing the middle of the viewport.
   const { active: scrollActive, register } = useActiveIndex();
   const [pointer, setPointer] = useState<Pointer | null>(null);
+
+  // Once scrolling moves to a different project with the pointer off the list, the
+  // earlier hover choice is dropped for good. Otherwise scrolling back to where it
+  // was made (e.g. via the "Work" link) would bring back a stale project.
+  const [lastScrollActive, setLastScrollActive] = useState(scrollActive);
+  if (lastScrollActive !== scrollActive) {
+    setLastScrollActive(scrollActive);
+    if (pointer && !pointer.onList) setPointer(null);
+  }
+
+  // A jump from the header ("Work", logo…) always shows the project at the landing
+  // spot, whatever was hovered before.
+  useEffect(() => {
+    const reset = () => setPointer(null);
+    window.addEventListener(SECTION_JUMP_EVENT, reset);
+    return () => window.removeEventListener(SECTION_JUMP_EVENT, reset);
+  }, []);
   const active = pointer && (pointer.onList || pointer.scrollActive === scrollActive) ? pointer.index : scrollActive;
 
   const point = (index: number) =>

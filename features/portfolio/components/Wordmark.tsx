@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+
+import { scrollToSection } from "@/features/portfolio/scrollToSection";
 
 import styles from "./SiteHeader.module.css";
 
@@ -9,7 +13,15 @@ type WordmarkProps = {
 
 export function Wordmark({ onClick }: WordmarkProps) {
   return (
-    <Link className={styles.wordmark} href="/#top" aria-label="Maybelle Catolin, back to top" onClick={onClick}>
+    <Link
+      className={styles.wordmark}
+      href="/#top"
+      aria-label="Maybelle Catolin, back to top"
+      onClick={(event) => {
+        onClick?.();
+        scrollToSection(event, "top");
+      }}
+    >
       <Image
         className={styles.wordmarkLogo}
         src="/brand/mc-logo.png"
