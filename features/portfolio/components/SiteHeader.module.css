@@ -254,6 +254,11 @@
   padding: 0 24px 32px;
 }
 
+/* Receives focus when the menu opens (see MobileMenu); not an interactive control. */
+.panel:focus {
+  outline: none;
+}
+
 /* Same height as the header, so the sidebar reads as its continuation. */
 .panelHead {
   align-items: center;
