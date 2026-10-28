@@ -31,12 +31,21 @@ export const siteUrl = resolveSiteUrl();
 
 export const site = {
   name: "Maybelle Catolin",
+  givenName: "Maybelle",
+  familyName: "Catolin",
+  /** Other names people search for: the nickname and each name on its own. */
+  alternateNames: ["Belle Catolin", "Belle", "Maybelle", "Catolin"],
   jobTitle: "Senior Software Engineer",
   title: "Maybelle Catolin | Senior Software Engineer, Frontend + Mobile",
   description:
-    "Senior Software Engineer with 8+ years of experience designing and building enterprise web and mobile applications across digital identity, financial services, banking, insurance, security, and sports technology.",
+    "Maybelle (Belle) Catolin is a Senior Software Engineer with 8+ years building secure web and mobile apps for digital identity, banking, insurance and fintech.",
   keywords: [
     "Maybelle Catolin",
+    "Belle Catolin",
+    "Maybelle",
+    "Catolin",
+    "Maybelle Catolin portfolio",
+    "Maybelle Catolin software engineer",
     "Senior Software Engineer",
     "Frontend Engineer",
     "React Developer",
@@ -54,6 +63,7 @@ export const site = {
   email: contact.email,
   location: contact.location,
   linkedin: contact.linkedin,
+  github: "https://github.com/maybellecatolin",
 } as const;
 
 /** Absolute URL for a path on this site. */

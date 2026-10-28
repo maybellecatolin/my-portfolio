@@ -19,10 +19,13 @@ export async function generateMetadata(props: PageProps<"/projects/[slug]">): Pr
 
   const path = `/projects/${project.slug}`;
   const title = `${project.name} case study`;
+  // Names the author too, so case studies also answer searches for her name.
+  const summary = /[.!?]$/.test(project.summary) ? project.summary : `${project.summary}.`;
+  const description = `${summary} A case study by ${site.name}, ${site.jobTitle}.`;
   const image = { url: `/og/${project.slug}.jpg`, width: 1200, height: 630, alt: `${project.name}: ${project.tagline}` };
   return {
     title,
-    description: project.summary,
+    description,
     alternates: { canonical: path },
     openGraph: {
       type: "article",
@@ -30,13 +33,13 @@ export async function generateMetadata(props: PageProps<"/projects/[slug]">): Pr
       siteName: site.name,
       locale: site.locale,
       title: `${title} | ${site.name}`,
-      description: project.summary,
+      description,
       images: [image],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${site.name}`,
-      description: project.summary,
+      description,
       images: [image.url],
     },
   };
