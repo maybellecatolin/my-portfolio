@@ -33,7 +33,7 @@ export function SiteFooter() {
           <aside className={styles.card} aria-label="Contact details">
             <div className={styles.person}>
               <span className={styles.portrait}>
-                <Image src="/brand/maybelle-catolin.webp" alt="Maybelle Catolin" width={88} height={88} sizes="88px" />
+                <Image src="/brand/maybelle-catolin.webp" alt="Portrait of Maybelle (Belle) Catolin" width={88} height={88} sizes="88px" />
               </span>
               <span className={styles.personText}>
                 <strong>Maybelle Catolin</strong>

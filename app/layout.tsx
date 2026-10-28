@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: site.description,
   applicationName: site.name,
   keywords: [...site.keywords],
-  authors: [{ name: site.name, url: site.linkedin }],
+  authors: [{ name: site.name, url: siteUrl }],
   creator: site.name,
   alternates: { canonical: "/" },
   openGraph: {
