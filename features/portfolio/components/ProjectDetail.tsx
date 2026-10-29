@@ -31,7 +31,7 @@ export function ProjectDetail({ project }: { project: Project }) {
         {/* Upper left on every screen; pinned under the header on phones and tablets. */}
         <div className={styles.backBar}>
           <div className={styles.backInner}>
-            <Link className={styles.back} href="/#work">
+            <Link className={styles.back} href="/work">
               <span aria-hidden="true">←</span> All projects
             </Link>
           </div>

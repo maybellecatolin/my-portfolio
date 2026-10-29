@@ -1,7 +1,7 @@
 import { PortfolioPage } from "@/features/portfolio/components/PortfolioPage";
 import { career, toolkit } from "@/features/portfolio/data";
 import { projects } from "@/features/portfolio/projects";
-import { absoluteUrl, jsonLd, site } from "@/features/portfolio/site";
+import { absoluteUrl, jsonLd, site, siteUrl } from "@/features/portfolio/site";
 
 // Structured data: who this site is about, so search engines can show a rich result.
 const structuredData = {
@@ -11,8 +11,10 @@ const structuredData = {
       "@type": "WebSite",
       "@id": absoluteUrl("/#website"),
       url: absoluteUrl("/"),
+      // The site name Google shows above the result. Alternates are fallbacks, in
+      // order; Google suggests the bare domain as the last one.
       name: site.name,
-      alternateName: [...site.alternateNames],
+      alternateName: ["Belle Catolin", siteUrl.hostname],
       description: site.description,
       inLanguage: "en",
       publisher: { "@id": absoluteUrl("/#person") },

@@ -2,7 +2,7 @@
 
 Personal portfolio of Maybelle Catolin, a senior software engineer building secure, accessible web and mobile products with React, React Native and TypeScript.
 
-A single-page home (hero, work, recommendations, experience, toolkit, contact) plus a case study page for each project. Every page is statically generated.
+A single-page home (hero, work, recommendations, experience, toolkit, contact), standalone Work and Experience pages, and a case study page for each project. Every page is statically generated.
 
 ## Stack
 
@@ -39,6 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 app/
   layout.tsx               Root layout and site-wide metadata (Open Graph, Twitter, robots)
   page.tsx                 Home page + Person/WebSite structured data
+  work/, experience/       Standalone Work and Experience pages (same sections as the home page)
   projects/[slug]/page.tsx Case study pages + per-project metadata and structured data
   not-found.tsx            Custom 404
   sitemap.ts, robots.ts    Generated sitemap.xml and robots.txt
@@ -80,7 +81,8 @@ Screens for projects under NDA are illustrative mockups, labelled as such on the
 
 - Titles use a template (`<page> | Maybelle Catolin`), with a unique description and canonical URL per page.
 - Open Graph and Twitter card tags on every page, with a 1200×630 preview image per page (the home page uses a screenshot of the hero).
-- JSON-LD structured data: `WebSite` and `Person` on the home page, `CreativeWork` and `BreadcrumbList` on each case study.
+- JSON-LD structured data: `WebSite`, `ProfilePage` and `Person` on the home page, `CollectionPage`/`WebPage` and `BreadcrumbList` on Work and Experience, `CreativeWork` and `BreadcrumbList` on each case study.
+- Work (`/work`) and Experience (`/experience`) are real pages so search engines can show them as sitelinks under the home page result. The header links point to them; on the home page those links still scroll to the section.
 - `sitemap.xml` (with image entries) and `robots.txt` are generated at build time.
 - The 404 page is excluded from indexing.
 
