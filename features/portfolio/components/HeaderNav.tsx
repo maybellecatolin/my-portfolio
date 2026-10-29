@@ -17,7 +17,7 @@ export function HeaderNav() {
       {navItems.map((item) => (
         <Link
           className={styles.navLink}
-          href={`/#${item.id}`}
+          href={item.href}
           key={item.id}
           aria-current={item.id === active ? "true" : undefined}
           onClick={(event) => scrollToSection(event, item.id)}

@@ -5,8 +5,9 @@ import type { SectionId } from "@/features/portfolio/data";
 
 /**
  * Scroll-spy for the header: returns the id of the section crossing the middle of
- * the viewport on the home page (null over the hero). On project pages, "work" is
- * current, since every project belongs to that section.
+ * the viewport on the home page (null over the hero). On /work and project pages
+ * "work" is current (every project belongs to that section); on /experience,
+ * "experience".
  */
 export function useActiveSection(ids: readonly SectionId[]): SectionId | null {
   const pathname = usePathname();
@@ -35,6 +36,7 @@ export function useActiveSection(ids: readonly SectionId[]): SectionId | null {
     return () => observer.disconnect();
   }, [ids, onHome]);
 
-  if (pathname.startsWith("/projects/")) return "work";
+  if (pathname === "/work" || pathname.startsWith("/projects/")) return "work";
+  if (pathname === "/experience") return "experience";
   return onHome ? active : null;
 }

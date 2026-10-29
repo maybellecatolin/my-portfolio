@@ -4,13 +4,17 @@ export const contact = {
   linkedin: "https://www.linkedin.com/in/maybelle-catolin",
 } as const;
 
-/** Header navigation, in page order. `id` is the section's element id on the home page. */
+/**
+ * Header navigation, in page order. `id` is the section's element id on the home page.
+ * Work and Experience also have their own pages, so search engines can list them as
+ * sitelinks; on the home page their links still scroll to the section.
+ */
 export const navItems = [
-  { label: "Work", id: "work" },
-  { label: "Recommendations", id: "recommendations" },
-  { label: "Experience", id: "experience" },
-  { label: "Toolkit", id: "toolkit" },
-  { label: "Contact", id: "contact" },
+  { label: "Work", id: "work", href: "/work" },
+  { label: "Recommendations", id: "recommendations", href: "/#recommendations" },
+  { label: "Experience", id: "experience", href: "/experience" },
+  { label: "Toolkit", id: "toolkit", href: "/#toolkit" },
+  { label: "Contact", id: "contact", href: "/#contact" },
 ] as const;
 
 export type SectionId = (typeof navItems)[number]["id"];

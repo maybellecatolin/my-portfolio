@@ -69,8 +69,9 @@ export default async function ProjectPage(props: PageProps<"/projects/[slug]">) 
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Work", item: absoluteUrl("/#work") },
-          { "@type": "ListItem", position: 2, name: project.name, item: url },
+          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+          { "@type": "ListItem", position: 2, name: "Work", item: absoluteUrl("/work") },
+          { "@type": "ListItem", position: 3, name: project.name, item: url },
         ],
       },
     ],

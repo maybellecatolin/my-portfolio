@@ -83,7 +83,7 @@ export function MobileMenu() {
                 <li key={item.id} style={{ "--i": index } as CSSProperties}>
                   <Link
                     className={styles.menuLink}
-                    href={`/#${item.id}`}
+                    href={item.href}
                     onClick={(event) => {
                       close();
                       scrollToSection(event, item.id);
